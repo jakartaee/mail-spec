@@ -8,7 +8,7 @@ Building
 
 Prerequisites:
 
-* JDK8+
+* JDK8
 * Maven 3.0.3+
 
 Run the full build:
@@ -16,7 +16,7 @@ Run the full build:
 `mvn install`
 
 Locate the html files:
-- `target/generated-docs/mail-spec-<version>.html`
+- target/generated-docs/mail-spec-&lt;version>.html
 
 Locate the PDF files:
-- `target/generated-docs/mail-spec-<version>.pdf`
+- target/generated-docs/mail-spec&lt;version>.pdf
