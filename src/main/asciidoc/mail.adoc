@@ -2,14 +2,14 @@
 == Introduction
 
 In the years since its first release, the
-JavaTM programming language has matured to become a platform. The Java
+Java programming language has matured to become a platform. The Java
 platform has added functionality, including distributed computing with
-RMI and CORBA, and a component architecture (JavaBeansTM). Java
+RMI and CORBA, and a component architecture (JavaBeans). Java
 applications have also matured, and many need an addition to the Java
-platform: a mail and messaging framework. The JavaMailTM API described
+platform: a mail and messaging framework. The Jakarta Mail API described
 in this specification satisfies that need.
 
-The JavaMail API provides a set of abstract
+The Jakarta Mail API provides a set of abstract
 classes defining objects that comprise a mail system. The API defines
 classes like Message, Store and Transport. The API can be extended and
 can be subclassed to provide new protocols and to add functionality when
@@ -21,32 +21,24 @@ MimeMessage and MimeBodyPart, implement widely used Internet mail
 protocols and conform to specifications RFC822 and RFC2045. They are
 ready to be used in application development.
 
-=== 
+=== Target Audience
 
-image:mail-2.png[image]
-
-Target Audience
-
-The JavaMail API is designed to serve several
+The Jakarta Mail API is designed to serve several
 audiences:
 
-Client, server, or middleware developers
+* Client, server, or middleware developers
 interested in building mail and messaging applications using the Java
 programming language.
 
-Application developers who need to
+* Application developers who need to
 “mail-enable” their applications.
 
-Service Providers who need to implement
+* Service Providers who need to implement
 specific access and transfer protocols. For example; a
-telecommunications company can use the JavaMail API to implement a PAGER
+telecommunications company can use the Jakarta Mail API to implement a PAGER
 Transport protocol that sends mail messages to alphanumeric pagers.
 
-=== 
-
-image:mail-2.png[image]
-
-Acknowledgments
+=== Acknowledgments
 
 The authors of this specification are John
 Mani, Bill Shannon, Max Spivak, Kapono Carter and Chris Cotton.
@@ -55,23 +47,23 @@ We would like to acknowledge the following
 people for their comments and feedback on the initial drafts of this
 document:
 
-Terry Cline, John Russo, Bill Yeager and
+* Terry Cline, John Russo, Bill Yeager and
 Monica Gaines: Sun Microsystems.
 
-Arn Perkins and John Ragan: Novell, Inc.
+* Arn Perkins and John Ragan: Novell, Inc.
 
-Nick Shelness: Lotus Development Corporation.
+* Nick Shelness: Lotus Development Corporation.
 
-Juerg von Kaenel: IBM Corporation.
+* Juerg von Kaenel: IBM Corporation.
 
-Prasad Yendluri, Jamie Zawinski, Terry
+* Prasad Yendluri, Jamie Zawinski, Terry
 Weissman and Gena Cunanan: Netscape Communications Corporation.
 
 
 
 == Goals and Design Principles
 
-The JavaMail API is designed to make adding
+The Jakarta Mail API is designed to make adding
 electronic mail capability to simple applications easy, while also
 supporting the creation of sophisticated user interfaces. It includes
 appropriate convenience classes which encapsulate common mail functions
@@ -79,65 +71,65 @@ and protocols. It fits with other packages for the Java platform in
 order to facilitate its use with other Java APIs, and it uses familiar
 programming models.
 
-The JavaMail API is therefore designed to
+The Jakarta Mail API is therefore designed to
 satisfy the following development and runtime requirements:
 
-Simple, straightforward class design is easy
+* Simple, straightforward class design is easy
 for a developer to learn and implement.
 
-Use of familiar concepts and programming
+* Use of familiar concepts and programming
 models support code development that interfaces well with other Java
 APIs.
 
-Uses familiar exception-handling and JDK 1.1
+** Uses familiar exception-handling and JDK 1.1
 event-handling programming models.
 
-Uses features from the JavaBeans Activation
-Framework (JAF) to handle access to data based on data-type and to
+** Uses features from the Jakarta Activation
+to handle access to data based on data-type and to
 facilitate the addition of data types and commands on those data types.
-The JavaMail API provides convenience functions to simplify these coding
+The Jakarta Mail API provides convenience functions to simplify these coding
 tasks.
 
-Lightweight classes and interfaces make it
+* Lightweight classes and interfaces make it
 easy to add basic mail-handling tasks to any application.
 
-Supports the development of robust
+* Supports the development of robust
 mail-enabled applications, that can handle a variety of complex mail
 message formats, data types, and access and transport protocols.
 
-The JavaMail API draws heavily from IMAP,
+The Jakarta Mail API draws heavily from IMAP,
 MAPI, CMC, c-client and other messaging system APIs: many of the
-concepts present in these other systems are also present in the JavaMail
+concepts present in these other systems are also present in the Jakarta Mail
 API. It is simpler to use because it uses features of the Java
 programming language not available to these other APIs, and because it
 uses the Java programming language’s object model to shelter
 applications from implementation complexity.
 
-The JavaMail API design is driven by the needs
+The Jakarta Mail API design is driven by the needs
 of the applications it supports—but it is also important to consider the
 needs of API implementors. It is critically important to enable the
 implementation of messaging systems written using the Java programming
 language that interoperate with existing messaging systems—especially
 Internet mail. It is also important to anticipate the development of new
-messaging systems. The JavaMail API conforms to current standards while
+messaging systems. The Jakarta Mail API conforms to current standards while
 not being so constrained by current standards that it stifles future
 innovation.
 
-The JavaMail API supports many different
+The Jakarta Mail API supports many different
 messaging system implementations—different message stores, different
-message formats, and different message transports. The JavaMail API
+message formats, and different message transports. The Jakarta Mail API
 provides a set of base classes and interfaces that define the API for
 client applications. Many simple applications will only need to interact
 with the messaging system through these base classes and interfaces.
 
-JavaMail subclasses can expose additional
+Jakarta Mail subclasses can expose additional
 messaging system features. For instance, the MimeMessage subclass
 exposes and implements common characteristics of an Internet mail
 message, as defined by RFC822 and MIME standards. Developers can
-subclass JavaMail classes to provide the implementations of particular
+subclass Jakarta Mail classes to provide the implementations of particular
 messaging systems, such as IMAP4, POP3, and SMTP.
 
-The base JavaMail classes include many
+The base Jakarta Mail classes include many
 convenience APIs that simplify use of the API, but don’t add any
 functionality. The implementation subclasses are not required to
 implement those convenience methods. The implementation subclasses must
@@ -145,12 +137,12 @@ implement only the core classes and methods that provide functionality
 required for the implementation.
 
 Alternately, a messaging system can choose to
-implement all of the JavaMail API directly, allowing it to take
+implement all of the Jakarta Mail API directly, allowing it to take
 advantage of performance optimizations, perhaps through use of batched
 protocol requests. The IMAP4 protocol implementation takes advantage of
 this approach.
 
-The JavaMail API uses the Java programming
+The Jakarta Mail API uses the Java programming
 language to good effect to strike a balance between simplicity and
 sophistication. Simple tasks are easy, and sophisticated functionality
 is possible.
@@ -159,128 +151,101 @@ is possible.
 
 == Architectural Overview
 
-This section describes the JavaMail
+This section describes the Jakarta Mail
 architecture, defines major classes and interfaces comprising that
 architecture, and lists major functions that the architecture
 implements.
 
-JavaMail provides elements that are used to
+Jakarta Mail provides elements that are used to
 construct an interface to a messaging system, including system
 components and interfaces. While this specification does not define any
-specific implementation, JavaMail does include several classes that
+specific implementation, Jakarta Mail does include several classes that
 implement RFC822 and MIME Internet messaging standards. These classes
-are delivered as part of the JavaMail class package.
+are delivered as part of the Jakarta Mail class package.
 
-=== 
+=== Jakarta Mail Layered Architecture
 
-image:mail-3.png[image]
-
-JavaMail Layered Architecture
-
-The JavaMail architectural components are
+The Jakarta Mail architectural components are
 layered as shown below:
 
-The Abstract Layer declares classes,
+* The Abstract Layer declares classes,
 interfaces and abstract methods intended to support mail handling
 functions that all mail systems support. API elements comprising the
 Abstract Layer are intended to be subclassed and extended as necessary
 in order to support standard data types, and to interface with message
 access and message transport protocols as necessary.
 
-The internet implementation layer implements
+* The internet implementation layer implements
 part of the abstract layer using internet standards - RFC822 and MIME.
 
-JavaMail uses the JavaBeans Activation
-Framework (JAF) in order to encapsulate message data, and to handle
+* Jakarta Mail uses Jakarta Activation
+in order to encapsulate message data, and to handle
 commands intended to interact with that data. Interaction with message
 data should take place via JAF-aware JavaBeans, which are not provided
-by the JavaMail API.
+by the Jakarta Mail API.
 
-JavaMail clients use the JavaMail API and
-Service Providers implement the JavaMail API. The layered design
-architecture allows clients to use the same JavaMail API calls to send,
+Jakarta Mail clients use the Jakarta Mail API and
+Service Providers implement the Jakarta Mail API. The layered design
+architecture allows clients to use the same Jakarta Mail API calls to send,
 receive and store a variety of messages using different data-types from
 different message stores and using different message transport
 protocols.
 
-=== 
 
 image:mail-4.png[image]
 
 
 
-=== 
-
-image:mail-3.png[image]
-
-JavaMail Class Hierarchy
+=== Jakarta Mail Class Hierarchy
 
 The figure below shows major classes and
-interfaces comprising the JavaMail API.
-link:MailAPI.html#a63[See Major JavaMail API Components] for
+interfaces comprising the Jakarta Mail API.
+See <<a63, Major Jakarta Mail API Components>> for
 brief descriptions of all components shown on this diagram.
-
-=== 
 
 image:mail-5.png[image]
 
-=== 
+=== The Jakarta Mail Framework
 
-image:mail-3.png[image]
-
-The JavaMail Framework
-
-The JavaMail API is intended to perform the
+The Jakarta Mail API is intended to perform the
 following functions, which comprise the standard mail handling process
 for a typical client application:
 
-Create a mail message consisting of a
+* Create a mail message consisting of a
 collection of header attributes and a block of data of some known data
-type as specified in the _Content-Type_ header field. JavaMail uses the
+type as specified in the _Content-Type_ header field. Jakarta Mail uses the
 Part interface and the Message class to define a mail message. It uses
 the JAF-defined DataHandler object to contain data placed in the
 message.
 
-Create a Session object, which authenticates
+* Create a Session object, which authenticates
 the user, and controls access to the message store and transport.
 
-Send the message to its recipient list.
+* Send the message to its recipient list.
 
-Retrieve a message from a message store.
+* Retrieve a message from a message store.
 
-Execute a high-level command on a retrieved
+* Execute a high-level command on a retrieved
 message. High-level commands like _view_ and _print_ are intended to be
-implemented via JAF-Aware JavaBeans.
+implemented via Activation-Aware JavaBeans.
 
-
-
-image:mail-6.png[image]
-
-The JavaMail framework does not define mechanisms that support message
+NOTE: The Jakarta Mail framework does not define mechanisms that support message
 delivery, security, disconnected operation, directory services or filter
 functionality.
 
-image:mail-6.png[image]
-
-This figure illustrates the JavaMail
+This figure illustrates the Jakarta Mail
 message-handling process.
-
-=== 
 
 image:mail-7.png[image]
 
 
-
-=== 
-
-image:mail-3.png[image]
-
-[[a63]]Major JavaMail API Components
+[[a63]]
+=== Major Jakarta Mail API Components
 
 This section reviews major components
-comprising the JavaMail architecture.
+comprising the Jakarta Mail architecture.
 
-=== The _Message_ Class
+==== The `Message` Class
 
 The Message class is an abstract class that
 defines a set of attributes and a content for a mail message. Attributes
@@ -294,24 +259,24 @@ define and format data content carried by a Message object, and to
 interface successfully to a mail system. The Message class adds From,
 To, Subject, Reply-To, and other attributes necessary for message
 routing via a message transport system. When contained in a folder, a
-Message object has a set of flags associated with it. JavaMail provides
+Message object has a set of flags associated with it. Jakarta Mail provides
 Message subclasses that support specific messaging implementations.
 
 The content of a message is a collection of
 bytes, or a reference to a collection of bytes, encapsulated within a
-Message object. JavaMail has no knowledge of the data type or format of
+Message object. Jakarta Mail has no knowledge of the data type or format of
 the message content. A Message object interacts with its content through
-an intermediate layer—the JavaBeans Activation Framework (JAF). This
+an intermediate layer - Jakarta Activation. This
 separation allows a Message object to handle any arbitrary content and
 to transmit it using any appropriate transmission protocol by using
 calls to the same API methods. The message recipient usually knows the
 content data type and format and knows how to handle that content.
 
-The JavaMail API also supports multipart
+The Jakarta Mail API also supports multipart
 Message objects, where each Bodypart defines its own set of attributes
 and content.
 
-=== Message Storage and Retrieval
+==== Message Storage and Retrieval
 
 Messages are stored in Folder objects. A
 Folder object can contain subfolders as well as messages, thus providing
@@ -329,7 +294,7 @@ connection. Service providers implementing Message Access protocols
 typically starts a session with the mail system by connecting to a
 particular Store implementation.
 
-=== Message Composition and Transport
+==== Message Composition and Transport
 
 A client creates a new message by
 instantiating an appropriate Message subclass. It sets attributes like
@@ -343,11 +308,11 @@ methods that send a message to a list of recipients. Invoking the
 Transport.send method with a Message object identifies the appropriate
 transport based on its destination addresses.
 
-=== The _Session_ Class
+==== The `Session` Class
 
 The Session class defines global and per-user
 mail-related properties that define the interface between a mail-enabled
-client and the network. JavaMail system components use the Session
+client and the network. Jakarta Mail system components use the Session
 object to set and get specific properties. The Session class also
 provides a default authenticated session object that desktop
 applications can share. The Session class is a final concrete class. It
@@ -359,92 +324,78 @@ protocols. By calling the appropriate factory method on a Session
 object, the client can obtain Store and Transport objects that support
 specific protocols.
 
-=== 
+=== The Jakarta Mail Event Model
 
-image:mail-3.png[image]
-
-The JavaMail Event Model
-
-The JavaMail event model conforms to the JDK
+The Jakarta Mail event model conforms to the JDK
 1.1 event-model specification, as described in the JavaBeans
-Specification. The JavaMail API follows the design patterns defined in
+Specification. The Jakarta Mail API follows the design patterns defined in
 the JavaBeans Specification for naming events, event methods and event
 listener registration.
 
 All events are subclassed from the MailEvent
 class. Clients listen for specific events by registering themselves as
 listeners for those events. Events notify listeners of state changes as
-a session progresses. During a session, a JavaMail component generates a
+a session progresses. During a session, a Jakarta Mail component generates a
 specific event-type to notify objects registered as listeners for that
-event-type. The JavaMail Store, Folder, and Transport classes are event
+event-type. The Jakarta Mail Store, Folder, and Transport classes are event
 sources. This specification describes each specific event in the section
 that describes the class that generates that event.
 
-=== 
-
-image:mail-3.png[image]
-
-Using the JavaMail API
+=== Using the Jakarta Mail API
 
 This section defines the syntax and lists the
-order in which a client application calls some JavaMail methods in order
+order in which a client application calls some Jakarta Mail methods in order
 to access and open a message located in a folder:
 
-A JavaMail client typically begins a mail
-handling task by obtaining a JavaMail Session object.
-
- Session session = Session.getInstance(props,
-authenticator);
-
-The client uses the Session object’s getStore
+. A Jakarta Mail client typically begins a mail
+handling task by obtaining a Jakarta Mail Session object.
++
+[source,java]
+----
+ Session session = Session.getInstance(props, authenticator);
+----
++
+. The client uses the Session object’s getStore
 method to connect to the default store. The getStore method returns a
 Store object subclass that supports the access protocol defined in the
 user properties object, which will typically contain per-user
 preferences.
-
++
+[source,java]
+----
  Store store = session.getStore();
 
  store.connect();
-
-If the connection is successful, the client
+----
++
+. If the connection is successful, the client
 can list available folders in the Store, and then fetch and view
 specific Message objects.
-
++
+[source,java]
+----
  // get the INBOX folder
-
  Folder inbox = store.getFolder("INBOX");
 
-
-
  // open the INBOX folder
-
  inbox.open(Folder.READ_WRITE);
 
-
-
- Message m = inbox.getMessage(1); // get
-Message # 1
-
- String subject = m.getSubject(); // get
-Subject
-
- Object content = m.getContent(); // get
-content
-
+ Message m = inbox.getMessage(1); // get Message # 1
+ String subject = m.getSubject(); // get Subject
+ Object content = m.getContent(); // get content
  ...
-
- ...
-
-Finally, the client closes all open folders,
+----
++
+. Finally, the client closes all open folders,
 and then closes the store.
-
++
+[source,java]
+----
  inbox.close(); // Close the INBOX
-
  store.close(); // Close the Store
+----
 
-link:MailAPI.html#a856[See Examples
-Using the JavaMail API] for a more complete example.
-
+See <<a856, Examples Using the Jakarta Mail API>> for a more complete example.
 
 
 == The Message Class
@@ -457,7 +408,7 @@ object that wraps around the actual data. The Message class is an
 abstract class that implements the Part interface.
 
 Subclasses of the Message classes can
-implement several standard message formats. For example, the JavaMail
+implement several standard message formats. For example, the Jakarta Mail
 API provides the MimeMessage class, that extends the Message class to
 implement the RFC822 and MIME standards. Implementations can typically
 construct themselves from byte streams and generate byte streams for
@@ -472,8 +423,6 @@ the folder.
 
 The figure below illustrates the structure of
 the Message class.
-
-=== 
 
 image:mail-8.png[image]
 
@@ -498,109 +447,79 @@ and the BodyPart class.
 
 The figure below illustrates a Message
 instance hierarchy, where the message contains attributes, a set of
-flags, and content. link:MailAPI.html#a1917[See MimeMessage
-Object Hierarchy] for an illustration of the MimeMessage object
-hierarchy.
-
-=== 
+flags, and content.
+See <<a1917, MimeMessage Object Hierarchy>> for an illustration of
+the MimeMessage object hierarchy.
 
 image:mail-9.png[image]
 
 The Message class provides methods to perform
 the following tasks:
 
- Get, set and create its attributes and
+* Get, set and create its attributes and
 content:
 
- public String getSubject() throws
-MessagingException;
+[source,java]
+----
+ public String getSubject() throws MessagingException;
 
+ public void setSubject(String subject) throws MessagingException;
 
+ public String[] getHeader(String name) throws MessagingException;
 
- public void setSubject(String subject)
+ public void setHeader(String name, String value) throws MessagingException;
 
- throws MessagingException;
+ public Object getContent() throws MessagingException;
 
+ public void setContent(Object content, String type) throws MessagingException
+----
 
+* Save changes to its containing folder.
 
- public String[] getHeader(String name)
-
- throws MessagingException;
-
-
-
- public void setHeader(String name, String
-value)
-
- throws MessagingException;
-
-
-
- public Object getContent()
-
- throws MessagingException;
-
-
-
- public void setContent(Object content, String
-type)
-
- throws MessagingException
-
- Save changes to its containing folder.
-
- public void saveChanges()
-
- throws MessagingException;
+[source,java]
+----
+ public void saveChanges() throws MessagingException;
+----
 
 This method also ensures that the Message
 header fields are updated to be consistent with the changed message
 contents.
 
- Generate a bytestream for the Message object.
+* Generate a bytestream for the Message object.
 
- public void writeTo(OutputStream os)
-
- throws IOException, MessagingException;
+[source,java]
+----
+ public void writeTo(OutputStream os) throws IOException, MessagingException;
+----
 
 This byte stream can be used to save the
 message or send it to a Transport object.
 
-=== 
-
-image:mail-10.png[image]
-
-The Part Interface
+=== The `Part` Interface
 
 The Part interface defines a set of standard
 headers common to most mail systems, specifies the data-type assigned to
 data comprising a content block, and defines set and get methods for
-each of these members. It is the basic data component in the JavaMail
+each of these members. It is the basic data component in the Jakarta Mail
 API and provides a common interface for both the Message and BodyPart
-classes. See the JavaMail API (Javadoc) documentation for details.
+classes. See the Jakarta Mail API (Javadoc) documentation for details.
 
-
-
-image:mail-11.png[image]
-
-A Message object can not be contained directly in a Multipart object,
+NOTE: A Message object can not be contained directly in a Multipart object,
 but must be embedded in a BodyPart first.
 
-image:mail-11.png[image]
-
-=== Message Attributes
+==== Message Attributes
 
 The Message class adds its own set of standard
 attributes to those it inherits from the Part interface. These
 attributes include the sender and recipient addresses, the subject,
 flags, and sent and received dates. The Message class also supports
-non-standard attributes in the form of headers. See the JavaMail API
+non-standard attributes in the form of headers. See the Jakarta Mail API
 (Javadoc) Documentation for the list of standard attributes defined in
 the Message class. Not all messaging systems will support arbitrary
 headers, and the availability and meaning of particular header names is
 specific to the messaging system implementation.
 
-=== The ContentType Attribute
+==== The `ContentType` Attribute
 
 The contentType attribute specifies the data
 type of the content, following the MIME typing specification (RFC 2045).
@@ -609,33 +528,27 @@ of the content, and a subtype that specifies a specific format for the
 content. A MIME type also includes an optional set of type-specific
 parameters.
 
-JavaMail API components can access content via
+Jakarta Mail API components can access content via
 these mechanisms:
 
-[width="100%",cols="50%,50%",]
+[width="100%",cols="30%,70%"]
 |===
-a|
-=== As an input stream
-
+| *As an input stream*
 |The Part interface declares the
 _getInputStream_ method that returns an input stream to the content.
 Note that Part implementations must decode any mail-specific transfer
 encoding before providing the input stream.
 
-a|
-===  _As a DataHandler object_
-
+|  *As a DataHandler object*
 |The Part interface declares the
-_getDataHandler_ method that returns a _javax.activation.DataHandler_
+_getDataHandler_ method that returns a _jakarta.activation.DataHandler_
 object that wraps around the content. The DataHandler object allows
 clients to discover the operations available to perform on the content,
 and to instantiate the appropriate component to perform those
-operations. link:MailAPI.html#a483[See The JavaBeans Activation
-Framework] for details describing the data typing framework
+operations. See <<a483, Jakarta Activation>>
+for details describing the data typing framework
 
-a|
-===  _As an object in the Java programming language_
-
+|  *As an object in the Java programming language*
 |The Part interface declares the _getContent_
 method that returns the content as an object in the Java programming
 language. The type of the returned object is dependent on the content’s
@@ -656,21 +569,13 @@ its byte stream in mail-safe form suitable for transmission. This byte
 stream is typically an aggregation of the Part attributes and the byte
 stream for its content.
 
-=== 
-
-image:mail-10.png[image]
-
-The Address Class
+=== The `Address` Class
 
 The Address class represents email addresses.
 The Address class is an abstract class. Subclasses provide
 implementation-specific semantics.
 
-=== 
-
-image:mail-10.png[image]
-
-The BodyPart Class
+=== The `BodyPart` Class
 
 The BodyPart class is an abstract class that
 implements the Part interface in order to define the attribute and
@@ -681,11 +586,7 @@ fields, as a Message object does.
 A BodyPart object is intended to be inserted
 into a Multipart container, later accessed via a multipart message.
 
-=== 
-
-image:mail-10.png[image]
-
-The Multipart Class
+=== The `Multipart` Class
 
 The Multipart class implements multipart
 messages. A multipart message is a Message object where the content-type
@@ -697,11 +598,7 @@ container object, or a DataHandler object.
 The figure below illustrates the structure and
 content of a multipart message:
 
-=== 
-
 image:mail-12.png[image]
-
-
 
 Note that Multipart objects can be nested to
 any reasonable depth within a multipart message, in order to build an
@@ -709,8 +606,6 @@ appropriate structure for data carried in DataHandler objects.
 Therefore, it is important to check the ContentType header for each
 BodyPart element stored within a Multipart container. The figure below
 illustrates a typical nested Multipart message.
-
-=== 
 
 image:mail-13.png[image]
 
@@ -722,35 +617,23 @@ getContent to get the Multipart container object.
 The Multipart object supports several methods
 that get, create, and remove individual BodyPart objects.
 
- public int getCount() throws
-MessagingException;
+[source,java]
+----
+ public int getCount() throws MessagingException;
 
+ public Body getBodyPart(int index) throws MessagingException;
 
+ public void addBodyPart(BodyPart part) throws MessagingException;
 
- public Body getBodyPart(int index)
+ public void removeBodyPart(BodyPart body) throws MessagingException;
 
- throws MessagingException;
-
- public void addBodyPart(BodyPart part)
-
- throws MessagingException;
-
-
-
- public void removeBodyPart(BodyPart body)
-
- throws MessagingException;
-
-
-
- public void removeBodyPart(int index)
-
- throws MessagingException;
+ public void removeBodyPart(int index) throws MessagingException;
+----
 
 The _Multipart_ class implements the
-_javax.beans.DataSource_ interface. It can act as the _DataSource_
-object for _javax.beans.DataHandler_ and
-_javax.beans.DataContentHandler_ objects. This allows message-aware
+_jakarta.activation.DataSource_ interface. It can act as the _DataSource_
+object for _jakarta.activation.DataHandler_ and
+_jakarta.activation.DataContentHandler_ objects. This allows message-aware
 content handlers to handle multipart data sources more efficiently,
 since the data has already been parsed into individual parts.
 
@@ -759,8 +642,6 @@ multipart message, and shows calls from the associated _Message_ and
 Multipart objects, for a typical call sequence returning a BodyPart
 containing text/plain content.
 
-=== 
-
 image:mail-14.png[image]
 
 In this figure, the _ContentType_ attribute of
@@ -768,30 +649,22 @@ a Message object indicates that it holds a multipart content. Use the
 getContent method to obtain the Multipart object.
 
 This code sample below shows the retrieval of
-a Multipart object. link:MailAPI.html#a856[See Examples Using
-the JavaMail API] for examples that traverse a multipart message and
+a Multipart object. See <<a856, Examples Using the Jakarta Mail API>>
+for examples that traverse a multipart message and
 examples that create new multipart messages.
 
-Multipart mp =
-(Multipart)message.getContent();
-
-
+[source,java]
+----
+Multipart mp = (Multipart)message.getContent();
 
 int count = mp.getCount();
-
 BodyPart body_part;
 
-
-
 for (int i = 0; i < count; i++)
+    body_part = mp.getBodyPart(i);
+----
 
- body_part = mp.getBodyPart(i);
-
-=== 
-
-image:mail-10.png[image]
-
-The Flags Class
+=== The `Flags` Class
 
 Flags objects carry flag settings that
 describe the state of a Message object within its containing folder. The
@@ -804,43 +677,31 @@ method on a Flags object sets the specified flag; the
 _contains(Flags.Flag f_ ) method returns whether the specified flag is
 set.
 
-[width="100%",cols="50%,50%",]
+[width="100%",cols="20%,80%"]
 |===
-a|
-===  _ANSWERED_
-
+|  *ANSWERED*
 |Clients set this flag to indicate that this
 message has been answered.
 
-a|
-===  _DRAFT_
-
+|  *DRAFT*
 |Indicates that this message is a draft.
 
-a|
-===  _FLAGGED_
-
+|  *FLAGGED*
 |No defined semantics. Clients can use this
 flag to mark a message in some user-defined manner.
 
-a|
-===  _RECENT_
-
+|  *RECENT*
 |This message is newly arrived in this folder.
 This flag is set when the message is first delivered into the folder and
 cleared when the containing folder is closed. Clients cannot set this
 flag.
 
-a|
-===  _SEEN_
-
+|  *SEEN*
 |Marks a message that has been opened. A
 client sets this flag implicitly when the message contents are
 retrieved.
 
-a|
-===  _DELETED_
-
+|  *DELETED*
 |Allows undoable message deletion. Setting
 this flag for a message marks it _deleted_ but does not physically
 remove the message from its folder. The client calls the _expunge_
@@ -854,11 +715,7 @@ contains all the system flags supported by that Folder implementation.
 The presence of the special USER flag indicates that the client can set
 arbitrary user-definable flags on any message belonging to this folder.
 
-=== 
-
-image:mail-10.png[image]
-
-Message Creation And Transmission
+=== Message Creation And Transmission
 
 The Message class is abstract, so an
 appropriate subclass must be instantiated to create a new Message
@@ -871,23 +728,23 @@ email message by instantiating a MimeMessage object, and passing
 required attribute values to that object. In an email message, the
 client defines Subject, From, and To attributes. The client then passes
 message _content_ into the MimeMessage object by using a suitably
-configured DataHandler object. link:MailAPI.html#a554[See
-Message Composition] for details.
+configured DataHandler object. See <<a554, Message Composition>> for details.
 
 After the Message object is constructed, the
 client calls the _Transport.send_ method to route it to its specified
-recipients. link:MailAPI.html#a674[See Transport Protocols and
-Mechanisms] for a discussion of the transport process.
+recipients. See <<a674, Transport Protocols and Mechanisms>>
+for a discussion of the transport process.
 
 
 
-== [[a219]]The Mail Session
+[[a219]]
+== The Mail Session
 
 A mail _Session_ object manages the
 configuration options and user authentication information used to
 interact with messaging systems.
 
-The JavaMail API supports simultaneous
+The Jakarta Mail API supports simultaneous
 multiple sessions. Each session can access multiple message stores and
 transports. Any desktop application that needs to access the current
 primary message store can share the default session. Typically the
@@ -900,27 +757,29 @@ information, properties, and the rest of the state of the object.
 
 For example,
 
-To create a _Session_ using a static factory
-method:
-
- Session session = Session.getInstance(props,
-authenticator);
-
-To create the default shared session, or to
+* To create a _Session_ using a static factory method:
+--
+[source,java]
+----
+ Session session = Session.getInstance(props, authenticator);
+----
+--
+* To create the default shared session, or to
 access the default shared session:
-
- Session defaultSession =
-
- Session.getDefaultInstance(props,
-authenticator);
+--
+[source,java]
+----
+ Session defaultSession = Session.getDefaultInstance(props, authenticator);
+----
+--
 
 The _Properties_ object that initializes the
 _Session_ contains default values and other configuration information.
 It is expected that clients using the APIs set the values for the listed
 properties, especially _mail.host_ , _mail.user_ , and _mail.from_ ,
 since the defaults are unlikely to work in all cases.
-link:MailAPI.html#a823[See Environment Properties] for a list
-of properties used by the JavaMail APIs and their defaults.
+See <<a823, Environment Properties>> for a list
+of properties used by the Jakarta Mail APIs and their defaults.
 
 Some messaging system implementations can use
 additional properties. Typically the properties object contains
@@ -935,7 +794,7 @@ callback mechanism to interact with the user when a password is required
 to login to a messaging system. It indirectly controls access to the
 default session, as described below.
 
-Clients using JavaMail can register
+Clients using Jakarta Mail can register
 PasswordAuthentication objects with the Session object for use later in
 the session or for use by other users of the same session. Because
 PasswordAuthentication objects contain passwords, access to this
@@ -961,59 +820,56 @@ to retrieve a Store or Transport object in order to read or send mail.
 Typically, the client retrieves the default Store or Transport object
 based on properties loaded for that session:
 
+[source,java]
+----
 Store store = session.getStore();
+----
 
 The client can override the session defaults
 and access a Store or Transport object that implements a particular
 protocol.
 
+[source,java]
+----
 Store store = session.getStore("imap");
+----
 
-link:MailAPI.html#a240[See The
-Provider Registry] for details.
+See <<a240, The Provider Registry>> for details.
 
 Implementations of Store and Transport objects
 will be told the session to which they have been assigned. They can then
 make the Session object available to other objects contained within this
 Store or Transport objects using application-dependent logic.
 
-=== 
-
-image:mail-15.png[image]
-
-[[a240]]The Provider Registry
+[[a240]]
+=== The Provider Registry
 
 The Provider Registry allows providers to
-register their protocol implementations to be used by JavaMail APIs. It
+register their protocol implementations to be used by Jakarta Mail APIs. It
 provides a mechanism for discovering available protocol, for registering
 new protocols, and for specifying default implementations.
 
-=== Resource Files
+==== Resource Files
 
-The providers for JavaMail APIs are configured
+The providers for Jakarta Mail APIs are configured
 using the following files:
 
- _javamail.providers_ and
-_javamail.default.providers_
+* _javamail.providers_ and _javamail.default.providers_
+* _javamail.address.map_ and _javamail.default.address.map_
 
- _javamail.address.map_ and
-_javamail.default.address.map_
-
-Each javamail.X resource file is searched in
+Each `javamail.X` resource file is searched in
 the following order:
 
- _java.home_ _/lib/javamail.X_
-
- _META-INF/javamail.X_
-
- _META-INF/javamail.default.X_
+. _java.home_ _/lib/javamail.X_
+. _META-INF/javamail.X_
+. _META-INF/javamail.default.X_
 
 The first method allows the user to include
 their own version of the resource file by placing it in the lib
 directory where the java.home property points. The second method allows
-an application that uses the JavaMail APIs to include their own resource
+an application that uses the Jakarta Mail APIs to include their own resource
 files in their application’s or jar file’s META-INF directory. The
-_javamail.default.X_ default files are part of the JavaMail _mail.jar_
+_javamail.default.X_ default files are part of the Jakarta Mail _mail.jar_
 file.
 
 File location depends upon how the
@@ -1034,10 +890,10 @@ explicitly changed by the application.
 
 The user- or system-supplied resource files
 augment, they do not override, the default files included with the
-JavaMail APIs. This means that all entries in all files loaded will be
+Jakarta Mail APIs. This means that all entries in all files loaded will be
 available.
 
-=== javamail.providers and javamail.default.providers
+===== javamail.providers and javamail.default.providers
 
 These resource files specify the stores and
 transports that are available on the system, allowing an application to
@@ -1047,52 +903,49 @@ defines four attributes that describe a protocol implementation. Each
 attribute is an "="-separated name-value pair with the name in
 lowercase. Each name-value pair is semi-colon (";") separated.
 
-=== Protocol Attributes
+.Protocol Attributes
+[%header,width="100%",cols="30%,70%"]
+|===
+|Name
+|Description
 
-Name
-
-Description
-
- _protocol_
-
-Name assigned to protocol. For example, ’smtp’
+| *protocol*
+|Name assigned to protocol. For example, ’smtp’
 for Transport.
 
- _type_
+| *type*
+|Valid entries are “store” and “transport”.
 
-Valid entries are “store” and “transport”.
+| *class*
+|Class name that implements this protocol.
 
- _class_
+| *vendor*
+|Optional string identifying the vendor.
 
-Class name that implements this protocol.
-
- _vendor_
-
-Optional string identifying the vendor.
-
- _version_
-
-Optional string identifying the version.
+| *version*
+|Optional string identifying the version.
+|===
 
 Here’s an example of
 _META-INF/javamail.default.providers_ file contents:
 
-protocol=imap; type=store;
-class=com.sun.mail.imap.IMAPStore; vendor=Sun;
+[source]
+----
+protocol=imap; type=store; class=com.sun.mail.imap.IMAPStore; vendor=Sun;
 
-protocol=smtp; type=transport;
-class=com.sun.mail.smtp.SMTPTransport;
+protocol=smtp; type=transport; class=com.sun.mail.smtp.SMTPTransport;
+----
 
-=== javamail.address.map and javamail.default.address.map
+===== javamail.address.map and javamail.default.address.map
 
 These resource files map transport address
-types to the transport protocol. The _javax.mail.Address.getType()_
+types to the transport protocol. The _jakarta.mail.Address.getType()_
 method returns the address type. The _javamail.address.map_ file maps
 the transport type to the protocol. The file format is a series of
 name-value pairs. Each key name should correspond to an address type
 that is currently installed on the system; there should also be an entry
-for each _javax.mail.Address_ implementation that is present if it is to
-be used. For example, _javax.mail.internet.InternetAddress.getType()_
+for each _jakarta.mail.Address_ implementation that is present if it is to
+be used. For example, _jakarta.mail.internet.InternetAddress.getType()_
 returns rfc822. Each referenced protocol should be installed on the
 system. For the case of news, below, the client should install a
 Transport provider supporting the nntp protocol.
@@ -1100,29 +953,31 @@ Transport provider supporting the nntp protocol.
 Here are the typical contents of a
 _javamail.address.map_ file.
 
+[source]
+----
 rfc822=smtp
-
 news=nntp
+----
 
-=== Provider
+==== Provider
 
 Provider is a class that describes a protocol
 implementation. The values come from the _javamail.providers_ and
 _javamail.default.providers_ resource files.
 
-=== Protocol Selection and Defaults
+==== Protocol Selection and Defaults
 
 The constructor for the Session object
 initializes the appropriate variables from the resource files. The order
 of the protocols in the resource files determines the initial defaults
 for protocol implementations. The methods, _getProviders()_ ,
-_\{getProvider()_ and _setProvider()_ allow the client to discover the
+_getProvider()_ and _setProvider()_ allow the client to discover the
 available (installed) protocol implementations, and to set the protocols
 to be used by default.
 
 At runtime, an application may set the default
-implementation for a particular protocol. It can set the _mail.protocol_
-. _class_ property when it creates the Session object. This property
+implementation for a particular protocol. It can set the _mail.protocol.class_
+property when it creates the Session object. This property
 specifies the class to use for a particular protocol. The
 _getProvider()_ method consults this property first.
 
@@ -1135,199 +990,107 @@ In either case, the provider specified is one
 of the ones configured in the resource files. An application may also
 instantiate a _Provider_ object to configure a new implementation.
 
-=== Example Scenarios
+==== Example Scenarios
 
-Scenario 1: The client application invokes the
+*Scenario 1:* The client application invokes the
 default protocols:
 
-class Application1 \{
-
- init() \{
-
- // application properties include the
-JavaMail
-
- // required properties: mail.store.protocol,
-
- // mail.transport.protocol, mail.host,
-mail.user
-
- Properties props = loadApplicationProps();
-
- Session session = Session.getInstance(props,
-null);
-
-
-
- // get the store implementation of the
-protocol
-
- // defined in mail.store.protocol; the
-implementation
-
- // returned will be defined by the order of
-entries in
-
- // javamail.providers &
-javamail.default.providers
-
- try \{
-
- Store store = session.getStore();
-
- store.connect();
-
- } catch (MessagingException mex) \{}
-
- ...
-
- }
-
+[source,java]
+----
+class Application1 {
+    init() {
+        // application properties include the Jakarta Mail
+        // required properties: mail.store.protocol,
+        // mail.transport.protocol, mail.host, mail.user
+        Properties props = loadApplicationProps();
+        Session session = Session.getInstance(props, null);
+       
+        // get the store implementation of the protocol
+        // defined in mail.store.protocol; the implementation
+        // returned will be defined by the order of entries in
+        // javamail.providers & javamail.default.providers
+        try {
+            Store store = session.getStore();
+            store.connect();
+        } catch (MessagingException mex) {}
+        ...
+    }
 }
+----
 
-Scenario 2: The client application presents
+*Scenario 2:* The client application presents
 available implementations to the user and then sets the user’s choice as
 the default implementation:
 
-class Application2 \{
+[source,java]
+----
+class Application2 {
+    init() {
+        // application properties include the Jakarta Mail
+        // properties: mail.store.protocol,
+        // mail.transport.protocol, mail.host, mail.user
+        Properties props = loadApplicationProps();
+        Session session = Session.getInstance(props, null);
 
- init() \{
+        // find out which implementations are available
+        Provider[] providers = session.getProviders();
 
- // application properties include the
-JavaMail
+        // ask the user which implementations to use
+        // user’s response may include a number of choices,
+        // i.e. imap & nntp store providers & smtp transport
+        Provider[] userChosenProviders =
+            askUserWhichProvidersToUse(providers);
 
- // properties: mail.store.protocol,
+        // set the defaults based on users response
+        for (int i = 0; i < userChosenProviders.length; i++)
+            session.setProvider(userChosenProviders[i]);
 
- // mail.transport.protocol, mail.host,
-mail.user
-
- Properties props = loadApplicationProps();
-
- Session session = Session.getInstance(props,
-null);
-
-
-
- // find out which implementations are
-available
-
- Provider[] providers =
-session.getProviders();
-
-
-
- // ask the user which implementations to use
-
- // user’s response may include a number of
-choices,
-
- // i.e. imap & nntp store providers & smtp
-transport
-
- Provider[] userChosenProviders =
-
- askUserWhichProvidersToUse(providers);
-
-
-
- // set the defaults based on users response
-
- for (int i = 0; i <
-userChosenProviders.length; i++)
-
- session.setProvider(userChosenProviders[i]);
-
- // get the store implementation of the
-protocol
-
- // defined in mail.store.protocol; the
-implementation
-
- // returned will be the one configured
-previously
-
- try \{
-
- Store store = session.getStore();
-
- store.connect();
-
- } catch (MessagingException mex) \{}
-
- ...
-
- }
-
+        // get the store implementation of the protocol
+        // defined in mail.store.protocol; the implementation
+        // returned will be the one configured previously
+        try {
+            Store store = session.getStore();
+            store.connect();
+        } catch (MessagingException mex) {}
+        ...
+    }
 }
+----
 
-Scenario 3: Application wants to specify an
+*Scenario 3:* Application wants to specify an
 implementation for a given protocol:
 
-class Application3 \{
+[source,java]
+----
+class Application3 {
+    init() {
+        // application properties include the Jakarta Mail
+        // required properties: mail.store.protocol,
+        // mail.transport.protocol, mail.host, mail.user
+        Properties props = loadApplicationProps();
 
- init() \{
+        // hard-code an implementation to use
+        // "com.acme.SMTPTRANSPORT"
 
- // application properties include the
-JavaMail
+        props.put("mail.smtp.class", "com.acme.SMTPTRANSPORT");
+        Session session = Session.getInstance(props, null);
 
- // required properties: mail.store.protocol,
-
- // mail.transport.protocol, mail.host,
-mail.user
-
- Properties props = loadApplicationProps();
-
-
-
- // hard-code an implementation to use
-
- // "com.acme.SMTPTRANSPORT"
-
-
-
- props.put("mail.smtp.class",
-"com.acme.SMTPTRANSPORT");
-
- Session session = Session.getInstance(props,
-null);
-
-
-
- // get the smtp transport implementation; the
-
- // implementation returned will be
-com.acme.SMTPTRANSPORT
-
- // if it was correctly configured in the
-resource files.
-
- // If com.acme.SMTPTRANSPORT can’t be loaded,
-a
-
- // MessagingException is thrown.
-
- try \{
-
- Transport transport =
-session.getTransport("smtp");
-
- } catch (MessagingException mex) \{
-
- quit();
-
- }
-
- }
-
- ...
-
+        // get the smtp transport implementation; the
+        // implementation returned will be com.acme.SMTPTRANSPORT
+        // if it was correctly configured in the resource files.
+        // If com.acme.SMTPTRANSPORT can’t be loaded, a
+        // MessagingException is thrown.
+        try {
+            Transport transport = session.getTransport("smtp");
+        } catch (MessagingException mex) {
+            quit();
+        }
+    }
+    ...
 }
+----
 
-=== 
-
-image:mail-15.png[image]
-
-Managing Security
+=== Managing Security
 
 The Session class allows messaging system
 implementations to use the Authenticator object that was registered when
@@ -1365,7 +1128,7 @@ to _null_ allows access to the default session from any security domain.
 
 In the future, JDK security Permissions could
 control access to the default session. Note that the Authenticator and
-PasswordAuthentication classes and their use in JavaMail is similar to
+PasswordAuthentication classes and their use in Jakarta Mail is similar to
 the classes with the same names provided in the _java.net_ package in
 the JDK. As new authentication mechanisms are added to the system, new
 methods can be added to the Authenticator class to request the needed
@@ -1374,14 +1137,10 @@ but new clients that understand these new authentication mechanisms can
 provide implementations of these methods. New classes other than
 PasswordAuthentication could be needed to contain the new authentication
 information, and new methods could be needed in the Session class to
-store such information. JavaMail design evolution will be patterned
+store such information. Jakarta Mail design evolution will be patterned
 after the corresponding JDK classes.
 
-=== 
-
-image:mail-15.png[image]
-
-Store and Folder URLs
+=== Store and Folder URLs
 
 To simplify message folder naming and to
 minimize the need to manage Store and Transport objects, folders can be
@@ -1389,17 +1148,21 @@ named using URLNames. URLNames are similar to URLs except they only
 include the parsing of the URL string. The Session class provides
 methods to retrieve a Folder object given a URLName:
 
+[source,java]
+----
 Folder f = session.getFolder(URLName);
+----
 
 or
 
+[source,java]
+----
 Store s = session.getStore(URLName);
-
-
+----
 
 == Message Storage And Retrieval
 
-This section describes JavaMail message
+This section describes Jakarta Mail message
 storage facilities supported by the Store and Folder classes.
 
 Messages are contained in Folders. New
@@ -1407,11 +1170,8 @@ messages are usually delivered to folders by a transport protocol or a
 delivery agent. Clients retrieve messages from folders using an access
 protocol.
 
-=== 
-
-image:mail-16.png[image]
-
-[[a378]]The Store Class
+[[a378]]
+=== The `Store` Class
 
 The Store class defines a database that holds
 a Folder hierarchy and the messages within. The Store also defines the
@@ -1425,7 +1185,7 @@ Most message stores require the user to be authenticated before they
 allow access. The connect method performs that authentication.
 
 For many message stores, a host name, user
-name, and password are sufficient to authenticate a user. The JavaMail
+name, and password are sufficient to authenticate a user. The Jakarta Mail
 API provides a connect method that takes this information as input
 parameters. Store also provides a default connect method. In either
 case, the client can obtain missing information from the Session
@@ -1442,17 +1202,15 @@ method.
 By default, Store queries the following
 properties for the user name and host name:
 
- _mail.user_ property, or _user.name_ system
+* _mail.user_ property, or _user.name_ system
 property (if _mail.user_ is not set)
-
- _mail.host_
+* _mail.host_
 
 These global defaults can be overridden on a
 per-protocol basis by the properties:
 
- _mail.protocol.user_
-
- _mail.protocol.host_
+* _mail.protocol.user_
+* _mail.protocol.host_
 
 Note that passwords can not be specified using
 properties.
@@ -1470,43 +1228,33 @@ Typically, clients will try to recover from an unexpected termination by
 calling connect to reconnect to the Store object, and then fetching new
 Folder objects and new Message objects.
 
-===  _Store_ Events
+====  `Store` Events
 
 Store sends the following events to interested
 listeners:
 
-[width="100%",cols="50%,50%",]
+[width="100%",cols="20%,80%",]
 |===
-a|
-=== ConnectionEvent
-
+| *ConnectionEvent*
 |Generated when a connection is successfully
 made to the _Store_ , or when an existing connection is terminated or
 disconnected.
 
-a|
-=== StoreEvent
-
+| *StoreEvent*
 |Communicates alerts and notification messages
 from the Store to the end user. The getMessageType method returns the
 event type, which can be one of: _ALERT_ or _NOTICE_ . The client must
 display _ALERT_ events in some fashion that calls the user’s attention
 to the message.
 
-a|
-=== FolderEvent
-
+| *FolderEvent*
 |Communicates changes to any folder contained
 within the _Store_ . These changes include creation of a new _Folder_ ,
-deletion of an existing _Folder_ , and renaming of an existing _Folder_
-.
+deletion of an existing _Folder_ , and renaming of an existing _Folder_.
 |===
 
-=== 
-
-image:mail-16.png[image]
-
-[[a401]]The _Folder_ Class
+[[a401]]
+=== The `Folder` Class
 
 The Folder class represents a folder
 containing messages. Folders can contain subfolders as well as messages,
@@ -1550,17 +1298,17 @@ A client can reference a message stored within
 a Folder either by its sequence number, or by the corresponding Message
 object itself. Since a sequence number can change within a session, it
 is preferable to use Message objects rather than sequence numbers as
-cached references to messages. Clients extending JavaMail are expected
+cached references to messages. Clients extending Jakarta Mail are expected
 to provide light-weight Message objects that get filled ’on-demand’, so
 that calling the _getMessages_ method on a Folder object is an _in_
 expensive operation, both in terms of CPU cycles and memory. For
 instance, an IMAP implementation could return Message objects that
 contain only the corresponding IMAP UIDs.
 
-=== The _FetchProfile_ Method
+==== The `FetchProfile` Method
 
 The Message objects returned by a Folder
-object are expected to be light-weight objects. Invoking _get_ xxx
+object are expected to be light-weight objects. Invoking get__xxx__
 methods on a Message cause the corresponding data items to be loaded
 into the object on demand. Certain Store implementations support batch
 fetching of data items for a range of Messages. Clients can use such
@@ -1574,29 +1322,21 @@ header-list window with the Subject, From, and X-mailer headers for all
 messages in the folder.
 
 
-
+[source,java]
+----
 Message[] msgs = folder.getMessages();
-
 FetchProfile fp = new FetchProfile();
-
 fp.add(FetchProfile.Item.ENVELOPE);
-
 fp.add("X-mailer");
-
 folder.fetch(msgs, fp);
-
-for (int i = 0; i < folder.getMessageCount();
-i++) \{
-
- display(msgs[i].getFrom());
-
- display(msgs[i].getSubject());
-
- display(msgs[i].getHeader("X-mailer"));
-
+for (int i = 0; i < folder.getMessageCount(); i++) {
+    display(msgs[i].getFrom());
+    display(msgs[i].getSubject());
+    display(msgs[i].getHeader("X-mailer"));
 }
+----
 
-===  _Folder_ Events
+====  `Folder` Events
 
 Folders generate events to notify listeners of
 any change in either the folder or in its Messages list. The client can
@@ -1605,10 +1345,10 @@ event only after that folder is opened.
 
 Folder supports the following events:
 
-[width="100%",cols="50%,50%",]
+[width="100%",cols="25%,75%",]
 |===
-|ConnectionEvent a|
-This event is generated when a Folder is
+|*ConnectionEvent*
+|This event is generated when a Folder is
 opened or closed.
 
 When a Folder closes (either because the
@@ -1617,34 +1357,36 @@ components belonging to that Folder become invalid. Typically, clients
 will attempt to recover by reopening that Folder, and then fetching
 Message objects.
 
-|FolderEvent |This
-event is generated when the client creates, deletes or renames this
+|*FolderEvent*
+|This event is generated when the client creates, deletes or renames this
 folder. Note that the Store object containing this folder can also
 generate this event.
 
-|MessageCountEvent a|
-This event notifies listeners that the message
+|*MessageCountEvent*
+|This event notifies listeners that the message
 count has changed. The following actions can cause this change:
 
- _Addition_ of new Messages into the Folder,
+* _Addition_ of new Messages into the Folder,
 either by a delivery agent or because of an _append_ operation. The new
 Message objects are included in the event.
 
-Removal of existing messages from this Folder.
+* Removal of existing messages from this Folder.
 Removed messages are referred to as _expunged_ messages. The
 _isExpunged_ method returns true for removed Messages and the
 _getMessageNumber_ method returns the original sequence number assigned
 to that message. All other Message methods throw a
-_MessageRemovedException_ . link:MailAPI.html#a401[See The
-Folder Class] for a discussion of removing deleted messages in shared
+_MessageRemovedException_.
+See <<a401, The Folder Class>> for a discussion of
+removing deleted messages in shared
 folders. The expunged Message objects are included in the event. An
 expunged message is invalid and should be pruned from the client's view
-as early as possible. link:MailAPI.html#a433[See The Expunge
-Process] for details on the expunge method.
+as early as possible.
+See <<a433, The Expunge Process>> for details on the expunge method.
 
 |===
 
-=== [[a433]]The Expunge Process
+[[a433]]
+=== The Expunge Process
 
 Deleting messages from a Folder is a two-phase
 operation. Setting the DELETED flag on messages marks them as deleted,
@@ -1665,25 +1407,25 @@ client synchronize itself with the expunged folder as early as possible.
 The next sections describe a set of recommendations for clients wanting
 to expunge a Folder:
 
-Expunge the folder; close it; and then reopen
+* Expunge the folder; close it; and then reopen
 and refetch messages from that Folder. This ensures that the client was
 notified of the updated folder state. In fact, the client can just issue
 the _close_ method with the _expunge_ parameter set to true to force an
 expunge of the Folder during the close operation, thus even avoiding the
 explicit call to _expunge_ .
 
-The previous solution might prove to be too
+* The previous solution might prove to be too
 simple or too drastic in some circumstances. This paragraph describes
 the scenario of a more complex client expunging a single access folder;
 for example, a folder that allows only one read-write connection at a
 time. The recommended steps for such a client after it issues the
 _expunge_ command on the folder are:
 
-Update its message count, either by
+** Update its message count, either by
 decrementing it by the number of expunged messages, or by invoking the
 getMessageCount method on the Folder.
 
-If the client uses sequence numbers to
+** If the client uses sequence numbers to
 reference messages, it must account for the renumbering of Message
 objects subsequent to the expunged messages. Thus if a folder has 5
 messages as shown below, (sequence numbers are within parenthesis), and
@@ -1691,14 +1433,12 @@ if the client is notified that messages A and C are removed, it should
 account for the renumbering of the remaining messages as shown in the
 second figure.
 
-===  
-
 image:mail-17.png[image]
 
-The client should prune expunged messages from
+* The client should prune expunged messages from
 its internal storage as early as possible.
 
-The expunge process becomes complex when
+* The expunge process becomes complex when
 dealing with a shared folder that can be edited. Consider the case where
 two clients are operating on the same folder. Each client possesses its
 own Folder object, but each Folder object actually represents the same
@@ -1713,25 +1453,25 @@ unexpected Message removed event— especially if the client is heavily
 multithreaded or if it uses sequence numbers.
 
 To allow clients to handle such situations
-gracefully, the JavaMail API applies following restrictions to Folder
+gracefully, the Jakarta Mail API applies following restrictions to Folder
 implementations:
 
-A Folder can remove and renumber its Messages
+* A Folder can remove and renumber its Messages
 only when it is explicitly expunged using the _expunge_ method. When the
 folder is implicitly expunged, it marks any expunged messages as
 _expunged_ , but it still maintains access to those Message objects.
 This means that the following state is maintained when the Folder is
 implicitly expunged:
 
- _getMessages_ returns expunged Message
+** _getMessages_ returns expunged Message
 objects together with valid message objects. However; an expunged
 message can throw the MessageExpungedException if direct access is
 attempted.
 
-The messages in the Folder should not be
+** The messages in the Folder should not be
 renumbered.
 
-The implicit expunge operation can not change
+** The implicit expunge operation can not change
 the total Folder message count.
 
 A Folder can notify listeners of “implicit”
@@ -1745,10 +1485,10 @@ each removed flag set to true.
 The recommended set of actions for a client
 under the above situation is as follows:
 
-Multithreaded clients that expect to handle
+* Multithreaded clients that expect to handle
 shared folders are advised not to use sequence numbers.
 
-If a client receives a MessageEvent indicating
+* If a client receives a MessageEvent indicating
 message removal, it should check the removed flag. If the flag is false,
 this indicates that another client has removed the message from this
 folder. This client might want to issue an _expunge_ request on the
@@ -1760,22 +1500,21 @@ folder (but note that all message objects would need to be refreshed in
 this case). The client may also mark the expunged messages in order to
 notify the end user.
 
-If the _removed_ flag was set to true, the
+* If the _removed_ flag was set to true, the
 client should follow earlier recommendations on dealing with explicit
 expunges.
 
-=== 
-
-image:mail-16.png[image]
-
-The Search Process
+=== The Search Process
 
 Search criteria are expressed as a tree of
 search-terms, forming a parse tree for the search expression. The
 SearchTerm class represents search terms. This is an abstract class with
 a single method:
 
+[source,java]
+----
 public boolean match(Message msg);
+----
 
 Subclasses implement specific matching
 algorithms by implementing the _match_ method. Thus new search terms and
@@ -1787,56 +1526,40 @@ search terms that implement specific match criteria on Message objects.
 For example, SubjectTerm pattern-matches the given String with the
 subject header of the given message.
 
-
-
-public final class SubjectTerm extends
-StringTerm \{
-
- public SubjectTerm(String pattern);
-
- public boolean match(Message m);
-
+[source,java]
+----
+public final class SubjectTerm extends StringTerm {
+    public SubjectTerm(String pattern);
+    public boolean match(Message m);
 }
+----
 
 The search package also provides a set of
 standard logical operator terms that can be used to compose complex
-search terms. These include AndTerm, OrTerm __ and NotTerm.
+search terms. These include AndTerm, OrTerm, and NotTerm.
 
-
-
-final class AndTerm extends SearchTerm \{
-
- public AndTerm(SearchTerm t1, SearchTerm t2);
-
- public boolean match(Message msg) \{
-
- // The AND operator
-
- for (int i=0; i < terms.length; i++)
-
- if (!terms[i].match(msg))
-
- return false;
-
- return true;
-
- }
-
+[source,java]
+----
+final class AndTerm extends SearchTerm {
+    public AndTerm(SearchTerm t1, SearchTerm t2);
+    public boolean match(Message msg) {
+        // The AND operator
+        for (int i = 0; i < terms.length; i++)
+            if (!terms[i].match(msg))
+                return false;
+        return true;
+    }
 }
-
-
+----
 
 The Folder class supports searches on messages
 through these search method versions:
 
-
-
+[source,java]
+----
 public Message[] search(SearchTerm term)
-
-public Message[] search(SearchTerm term,
-Message[] msgs)
-
-
+public Message[] search(SearchTerm term, Message[] msgs)
+----
 
 These methods return the _Message_ objects
 matching the specified search term. The default implementation applies
@@ -1845,30 +1568,25 @@ implementations may optimize this; for example, the IMAP _Folder_
 implementation maps the search term into an IMAP SEARCH command that the
 server executes.
 
-== [[a483]]The JavaBeans Activation Framework
+[[a483]]
+== Jakarta Activation
 
-JavaMail relies heavily on the JavaBeans
-Activation Framework (JAF) to determine the MIME data type, to determine
+Jakarta Mail relies heavily on Jakarta
+Activation to determine the MIME data type, to determine
 the commands available on that data, and to provide a software component
-corresponding to a particular behavior. The JAF specification is part of
-the "Glasgow" JavaBeans specification. More details can be obtained from
-http://java.sun.com/beans/glasgow/jaf.html
+corresponding to a particular behavior.
 
-This section explains how the JavaMail and JAF
+This section explains how the Jakarta Mail and Jakarta Activation
 APIs work together to manage message content. It describes how clients
-using JavaMail can access and operate on the content of Messages and
-BodyParts. This discussion assumes you are familiar with the JAF
-specification posted at http://java.sun.com.
+using Jakarta Mail can access and operate on the content of Messages and
+BodyParts. This discussion assumes you are familiar with the Jakarta Activation
+specification posted at https://jakarta.ee/specifications/activation.
 
-=== 
+=== Accessing the Content
 
-image:mail-18.png[image]
-
-Accessing the Content
-
-For a client using JavaMail, arbitrary data is
+For a client using Jakarta Mail, arbitrary data is
 introduced to the system in the form of mail messages. The
-javax.mail.Part interface allows the client to access the content. Part
+jakarta.mail.Part interface allows the client to access the content. Part
 consists of a set of attributes and a "content". The Part interface is
 the common base interface for Messages and BodyParts. A typical mail
 message has one or more body parts, each of a particular MIME type.
@@ -1883,240 +1601,184 @@ _Part.getInputStream_ method is the same as
 _Part.getDataHandler().getInputStream()_ .
 
 The content returned (either via an
-InputStream or an object in the Java programmin language) depends on the
+InputStream or an object in the Java programming language) depends on the
 MIME type. For example: a Part that contains textual content returns the
 following:
 
-The _Part.getContentType_ method returns
+* The _Part.getContentType_ method returns
 text/plain
 
-The _Part.getInputStream_ method returns an
+* The _Part.getInputStream_ method returns an
 _InputStream_ containing the bytes of the text
 
-The _Part.getContent_ method returns a
+* The _Part.getContent_ method returns a
 java.lang.String object
 
 Content is returned either as an input stream,
 or as an object in the Java programming language.
 
-When an InputStream is returned, any
+* When an InputStream is returned, any
 mail-specific encodings are decoded before the stream is returned.
 
-When an object in the Java programming
+* When an object in the Java programming
 language is returned using the getContent method, the type of the
-returned object depends upon the content itself. In the JavaMail API,
+returned object depends upon the content itself. In the Jakarta Mail API,
 any Part with a main content type set to “multipart/” (any kind of
-multipart) should return a javax.mail.Multipart object from the
+multipart) should return a jakarta.mail.Multipart object from the
 getContent method. A Part with a content type of message/rfc822 returns
-a javax.mail.Message object from the getContent method.
+a jakarta.mail.Message object from the getContent method.
 
-=== Example: Message Output
+==== Example: Message Output
 
 This example shows how you can traverse Parts
 and display the data contained in a message.
 
-public void printParts(Part p) \{
-
- Object o = p.getContent();
-
- if (o instanceof String) \{
-
- System.out.println("This is a String");
-
- System.out.println((String)o);
-
- } else if (o instanceof Multipart) \{
-
- System.out.println("This is a Multipart");
-
- Multipart mp = (Multipart)o;
-
- int count = mp.getCount();
-
- for (int i = 0; i < count; i++) \{
-
- printParts(mp.getBodyPart(i));
-
- }
-
- } else if (o instanceof InputStream) \{
-
- System.out.println("This is just an input
-stream");
-
- InputStream is = (InputStream)o;
-
- int c;
-
- while ((c = is.read()) != -1)
-
- System.out.write(c);
-
- }
-
+[source,java]
+----
+public void printParts(Part p) {
+    Object o = p.getContent();
+        if (o instanceof String) {
+        System.out.println("This is a String");
+        System.out.println((String)o);
+    } else if (o instanceof Multipart) {
+        System.out.println("This is a Multipart");
+        Multipart mp = (Multipart)o;
+        int count = mp.getCount();
+        for (int i = 0; i < count; i++) {
+            printParts(mp.getBodyPart(i));
+        }
+    } else if (o instanceof InputStream) {
+        System.out.println("This is just an input stream");
+        InputStream is = (InputStream)o;
+        int c;
+        while ((c = is.read()) != -1)
+            System.out.write(c);
+    }
 }
+----
 
-=== 
-
-image:mail-18.png[image]
-
-Operating on the Content
+=== Operating on the Content
 
 The DataHandler allows clients to discover the
 operations available on the content of a Message, and to instantiate the
 appropriate JavaBeans to perform those operations. The most common
-operations on Message content are _view_ , _edit_ and _print_ .
+operations on Message content are __view__, __edit__, and __print__.
 
-===  _Example: Viewing a Message_
+====  _Example: Viewing a Message_
 
 Consider a Message “Viewer” Bean that presents
 a user interface that displays a mail message. This example shows how a
 viewer bean can be used to display the content of a message (that
-usually is _text/plain, text/html,_ or _multipart/mixed_ ).
+usually is _text/plain, text/html,_ or _multipart/mixed_).
 
+NOTE: Perform error checking to ensure that a valid Component was created.
 
-
-image:mail-19.png[image]
-
-Perform error checking to ensure that a valid Component was created.
-
-image:mail-19.png[image]
-
+[source,java]
+----
 // message passed in as parameter
-
-void setMessage(Message msg) \{
-
- DataHandler dh = msg.getDataHandler();
-
- CommandInfo cinfo = dh.getCommand("view");
-
- Component comp = (Component)
-dh.getBean(cinfo);
-
- this.setMainViewer(comp);
-
+void setMessage(Message msg) {
+    DataHandler dh = msg.getDataHandler();
+    CommandInfo cinfo = dh.getCommand("view");
+    Component comp = (Component)
+    dh.getBean(cinfo);
+    this.setMainViewer(comp);
 }
+----
 
-===  _Example: Showing Attachments_
+====  _Example: Showing Attachments_
 
 In this example, the user has selected an
 attachment and wishes to display it in a separate dialog. The client
 locates the correct viewer object as follows.
 
-// Retrieve the BodyPart from the current
-attachment
-
+[source,java]
+----
+// Retrieve the BodyPart from the current attachment
 BodyPart bp = getSelectedAttachment();
 
-
-
 DataHandler dh = bp.getDataHandler();
-
 CommandInfo cinfo = dh.getCommand("view");
-
-Component comp = (Component)
-dh.getBean(cinfo);
-
-
+Component comp = (Component) dh.getBean(cinfo);
 
 // Add viewer to dialog Panel
-
 MyDialog myDialog = new MyDialog();
-
 myDialog.add(comp);
 
-
-
 // display dialog on screen
-
 myDialog.show();
+----
 
 
+See <<a597, Setting Message Content>> for examples that
+construct a message for a send operation.
 
-link:MailAPI.html#a597[See Setting
-Message Content] for examples that construct a message for a send
-operation.
-
-=== 
-
-image:mail-18.png[image]
-
-Adding Support for Content Types
+=== Adding Support for Content Types
 
 Support for commands acting on message data is
-an implementation task left to the client. JavaMail and JAF APIs intend
-for this support to be provided by a JAF-Aware JavaBean. Almost all data
+an implementation task left to the client. Jakarta Mail and Jakarta Activation
+APIs intend
+for this support to be provided by an Activation-Aware JavaBean. Almost all data
 will require _edit_ and _view_ support.
 
-Currently, the JavaMail API does not provide
-_viewer JavaBeans_ . The JAF does provide two very simple JAF-aware
-viewer beans: A Text Viewer and Image Viewer. These beans handle data
-where content-type has been set to _text/plain_ or _image/gif_ .
+Currently, the Jakarta Mail API does not provide
+_viewer JavaBeans_ .
 
-Developers writing a JavaMail client need to
-write additional viewers that support some of the basic content types--
-specifically _message/rfc822_ _,_ _multipart/mixed_ _,_ and __
-_text/plain_ . These are the usual content-types encountered when
+Developers writing a Jakarta Mail client need to
+write additional viewers that support some of the basic content types --
+specifically _message/rfc822_, _multipart/mixed_, and
+_text/plain_. These are the usual content-types encountered when
 displaying a Message, and they provide the look and feel of the
 application.
 
-Content developers providing additional data
-types should refer to the JAF specification, that discusses how to
+Content developers providing additional data types should refer to the
+Jakarta Activation specification, that discusses how to
 create DataContentHandlers and Beans that operate on those contents.
 
-== [[a554]]Message Composition
+[[a554]]
+== Message Composition
 
 This section describes the process used to
 instantiate a message object, add content to that message, and send it
 to its intended list of recipients.
 
-The JavaMail API allows a client program to
+The Jakarta Mail API allows a client program to
 create a message of arbitrary complexity. Messages are instantiated from
 the Message subclass. The client program can manipulate any message as
 if it had been retrieved from a Store.
 
-=== 
-
-image:mail-20.png[image]
-
-Building a Message Object
+=== Building a Message Object
 
 To create a message, a client program
 instantiates a Message object, sets appropriate attributes, and then
 inserts the content.
 
-The attributes specify the message address and
+* The attributes specify the message address and
 other values necessary to send, route, receive, decode and store the
 message. Attributes also specify the message structure and data content
 type.
 
-Message content is carried in a DataHandler
+* Message content is carried in a DataHandler
 object, that carries either data or a Multipart object. A DataHandler
 carries the content body and provides methods the client uses to handle
 the content. A Multipart object is a container that contains one or more
 Bodypart objects, each of which can in turn contain DataHandler objects.
 
-=== 
+=== Message Creation
 
-image:mail-20.png[image]
-
-Message Creation
-
-javax.mail.Message is an abstract class that
+jakarta.mail.Message is an abstract class that
 implements the Part interface. Therefore, to create a message object,
 select a message subclass that implements the appropriate message type.
 
 For example, to create a Mime message, a
-JavaMail client instantiates an empty javax.mail.internet.MimeMessage
+Jakarta Mail client instantiates an empty jakarta.mail.internet.MimeMessage
 object passing the current Session object to it:
 
+[source,java]
+----
 Message msg = new MimeMessage(session);
+----
 
-=== 
-
-image:mail-20.png[image]
-
-Setting Message Attributes
+=== Setting Message Attributes
 
 The Message class provides a set of methods
 that specify standard attributes common to all messages. The MimeMessage
@@ -2127,35 +1789,26 @@ name-value pairs.
 The methods for setting standard attributes
 are listed below:
 
-
-
-public class Message \{
-
- public void setFrom(Address addr);
-
- public void setFrom(); // retrieves from
-system
-
- public void setRecipients(RecipientType type,
-Address[] addrs);
-
- public void setReplyTo(Address[] addrs);
-
- public void setSentDate(Date date);
-
- public void setSubject(String subject);
-
- ...
-
+[source,java]
+----
+public class Message {
+    public void setFrom(Address addr);
+    public void setFrom(); // retrieves from system
+    public void setRecipients(RecipientType type, Address[] addrs);
+    public void setReplyTo(Address[] addrs);
+    public void setSentDate(Date date);
+    public void setSubject(String subject);
+    ...
 }
-
-
+----
 
 The Part interface specifies the following
 method, that sets custom headers:
 
-public void setHeader(String name, String
-value)
+[source,java]
+----
+public void setHeader(String name, String value)
+----
 
 The setRecipients method takes a RecipientType
 as its first parameter, which specifies which recipient field to use.
@@ -2164,12 +1817,12 @@ Message.RecipientType.BCC are defined. Additional RecipientTypes may be
 defined as necessary.
 
 The Message class provides two versions of the
-of the _setFrom_ method:
+_setFrom_ method:
 
-setFrom(Address addr) specifies the sender
-explicitly from an Address object parameter.
+* `setFrom(Address addr)` specifies the sender
+explicitly from an `Address` object parameter.
 
-setFrom() retrieves the sender’s username from
+* `setFrom()` retrieves the sender’s username from
 the local system.
 
 The code sample below sets attributes for the
@@ -2177,33 +1830,20 @@ MimeMessage just created. First, it instantiates Address objects to be
 used as _To_ and _From_ addresses. Then, it calls _set_ methods, which
 equate those addresses to appropriate message attributes:
 
-
-
+[source,java]
+----
 toAddrs[] = new InternetAddress[1];
-
-toAddrs[0] = new
-InternetAddress("luke@rebellion.gov");
-
-Address fromAddr =
-
- new InternetAddress("han.solo@smuggler.com");
-
-
+toAddrs[0] = new InternetAddress("luke@rebellion.gov");
+Address fromAddr = new InternetAddress("han.solo@smuggler.com");
 
 msg.setFrom(fromAddr);
-
-msg.setRecipients(Message.RecipientType.TO,
-toAddrs);
-
+msg.setRecipients(Message.RecipientType.TO, toAddrs);
 msg.setSubject("Takeoff time.");
-
 msg.setSentDate(new Date());
+----
 
-=== 
-
-image:mail-20.png[image]
-
-[[a597]]Setting Message Content
+[[a597]]
+=== Setting Message Content
 
 The Message object carries content data within
 a DataHandler object. To add content to a Message, a client creates
@@ -2211,7 +1851,7 @@ content, instantiates a DataHandler object, places content into that
 DataHandler object, and places that object into a Message object that
 has had its attributes defined.
 
-The JavaMail API provides two techniques that
+The Jakarta Mail API provides two techniques that
 set message content. The first technique uses the _setDataHandler
 method. The second technique uses_ the _setContent_ method.
 
@@ -2221,15 +1861,15 @@ object. The DataHandler is an object that encapsulates data. The data is
 passed to the DataHandler's constructor as either a DataSource (a stream
 connected to the data) or as an object in the Java programming language.
 The InputStream object creates the DataSource.
-link:DataTyping.html#UNKNOWN[] for additional information.
+See <<a483, Jakarta Activation>> for additional information.
 
-public class DataHandler \{
-
- DataHandler(DataSource dataSource);
-
- DataHandler(Object data, String mimeType);
-
+[source,java]
+----
+public class DataHandler {
+    DataHandler(DataSource dataSource);
+    DataHandler(Object data, String mimeType);
 }
+----
 
 The code sample below shows how to place text
 content into an InternetMessage. First, create the text as a string
@@ -2237,234 +1877,167 @@ object. Then, pass the string into a DataHandler object, together with
 its MIME type. Finally, add the DataHandler object to the message
 object:
 
+[source,java]
+----
 // create brief message text
-
 String content = "Leave at 300.";
-
-
 
 // instantiate the DataHandler object
 
+DataHandler data = new DataHandler(content, "text/plain");
 
-
-DataHandler data = new DataHandler(content,
-"text/plain");
-
-
-
-// Use setDataHandler() to insert data into
-the
-
+// Use setDataHandler() to insert data into the
 // new Message object
 
-
-
- msg.setDataHandler(data);
+msg.setDataHandler(data);
+----
 
 Alternately, _setContent_ implements a simpler
 technique that takes the data object and its MIME type. _setContent_
 creates the DataHandler object automatically:
 
+[source,java]
+----
 // create the message text
-
 String content = "Leave at 300.";
 
-
-
-// call setContent to pass content and content
-type
-
+// call setContent to pass content and content type
 // together into the message object
 
-
-
 msg.setContent(content, "text/plain");
+----
 
-When the client calls _Transport_ _.send()_ to
+When the client calls _Transport.send()_ to
 send this message, the recipient will receive the message below, using
 either technique:
 
+[source]
+----
 Date: Wed, 23 Apr 1997 22:38:07 -0700 (PDT)
-
 From: han.solo@smuggler.com
-
 Subject: Takeoff time
-
 To: luke@rebellion.gov
 
-
-
 Leave at 300.
+----
 
-=== 
-
-image:mail-20.png[image]
-
- Building a MIME Multipart Message
+=== Building a MIME Multipart Message
 
 Follow these steps to create a MIME Multipart
 Message:
 
-Instantiate a new MimeMultipart object, or a
+. Instantiate a new MimeMultipart object, or a
 subclass.
 
-Create MimeBodyParts for the specific message
+. Create MimeBodyParts for the specific message
 parts. Use the _setContent_ method or the _setDataHandler_ method to
 create the content for each Bodypart, as described in the previous
 section.
-
-
-
-image:mail-21.png[image]
-
-The default subtype for a MimeMultipart object is mixed. It can be set
++
+--
+NOTE: The default subtype for a MimeMultipart object is mixed. It can be set
 to other subtypes as required. MimeMultipart subclasses might already
 have their subtype set appropriately.
-
-image:mail-21.png[image]
-
-Insert the Multipart object into the Message
+--
++
+. Insert the Multipart object into the Message
 object by calling _setContent(Multipart)_ within a newly-constructed
-Message object. +
- +
+Message object.
++
 The example below creates a Multipart object and then adds two message
 parts to it. The first message part is a text string, “Spaceport Map,”
 and the second contains a document of type “application/postscript.”
 Finally, this multipart object is added to a MimeMessage object of the
 type described above.
 
+[source,java]
+----
 // Instantiate a Multipart object
-
 MimeMultipart mp = new MimeMultipart();
 
-
-
 // create the first bodypart object
-
 MimeBodyPart b1 = new MimeBodyPart();
 
-
-
 // create textual content
-
 // and add it to the bodypart object
-
 b1.setContent("Spaceport Map","text/plain");
-
 mp.addBodyPart(b1);
 
-
-
 // Multipart messages usually have more than
-
 // one body part. Create a second body part
-
 // object, add new text to it, and place it
-
 // into the multipart message as well. This
-
 // second object holds postscript data.
-
-
 
 MimeBodyPart b2 = new MimeBodyPart();
 b2.setContent(map,"application/postscript");
-
 mp.addBodyPart(b2);
 
-
-
-
-
-// Create a new message object as described
-above,
-
+// Create a new message object as described above,
 // and set its attributes. Add the multipart
-
-// object to this message and call
-saveChanges()
-
-// to write other message headers
-automatically.
-
-
+// object to this message and call saveChanges()
+// to write other message headers automatically.
 
 Message msg = new MimeMessage(session);
 
-
-
 // Set message attrubutes as in a singlepart
-
 // message.
 
-
-
 msg.setContent(mp); // add Multipart
-
 msg.saveChanges(); // save changes
-
-
+----
 
 After all message parts are created and
 inserted, call the _saveChanges_ method to ensure that the client writes
 appropriate message headers. This is identical to the process followed
-with a single part message. Note that the JavaMail API calls the
+with a single part message. Note that the Jakarta Mail API calls the
 _saveChanges_ method implicitly during the _send_ process, so invoking
 it is unnecessary and expensive if the message is to be sent
 immediately.
 
-== [[a674]]Transport Protocols and Mechanisms
+[[a674]]
+== Transport Protocols and Mechanisms
 
 The Transport abstract class defines the
 message submission and transport protocol. Subclasses of the Transport
 class implement SMTP and other transport protocols.
 
-=== 
-
-image:mail-22.png[image]
-
-Obtaining the Transport Object
+=== Obtaining the Transport Object
 
 The Transport object is seldom explicitly
 created. The getTransport method obtains a Transport object from the
-Session factory. The JavaMail API provides three versions of the
+Session factory. The Jakarta Mail API provides three versions of the
 getTransport method:
 
-
-
-public class Session \{
-
- public Transport getTransport(Address
-address);
-
- public Transport getTransport(String
-protocol);
-
- public Transport getTransport();
-
+[source,java]
+----
+public class Session {
+    public Transport getTransport(Address address);
+    public Transport getTransport(String protocol);
+    public Transport getTransport();
 }
+----
 
-getTransport(Address address) returns the
+* getTransport(Address address) returns the
 implementation of the transport class based on the address type. A
 user-extensible map defines which transport type to use for a particular
 address. For example, if the address is an InternetAddress, and
 InternetAddress is mapped to a protocol that supports SMTP then
 SMTPTransport can be returned.
 
-The client can also call getTransport(“smtp”)
+* The client can also call getTransport(“smtp”)
 to request SMTP, or another transport implementation protocol.
 
- _getTransport()_ returns the transport
+* _getTransport()_ returns the transport
 specified in the _mail.transport.protocol_ property.
 
-link:MailAPI.html#a219[See The Mail
-Session] for details.
+See <<a219, The Mail Session>> for details.
 
-=== Transport Methods
+==== Transport Methods
 
 The Transport class provides the connect and
 protocolConnect methods, which operate similarly to those on the Store
-class. link:MailAPI.html#a378[See The Store Class] for details.
+class. See <<a378, The Store Class>> for details.
 
 A Transport object generates a ConnectionEvent
 to notify its listeners of a successful or a failed connection. A
@@ -2497,11 +2070,7 @@ match, the end-user determines where the messages are actually sent.
 This is useful for implementing the Bcc: header, and other similar
 functions.
 
-=== 
-
-image:mail-22.png[image]
-
-Transport Events
+=== Transport Events
 
 Clients can register as listeners for events
 generated by transport implementations. (Note that the abstract
@@ -2509,14 +2078,14 @@ Transport class doesn't fire any events, only particular protocol
 implementations generate events). There are two events generated:
 _ConnectionEvent_ and _TransportEvent_ .
 
-=== ConnectionEvent
+==== `ConnectionEvent`
 
 If the transport connects successfully, it
 will fire the ConnectionEvent with the type set to OPENED. If the
 connection times out or is closed, ConnectionEvent with type CLOSED is
 generated.
 
-=== TransportEvent
+==== `TransportEvent`
 
 The sendMessage method generates a
 TransportEvent to its listeners. That event contains information about
@@ -2526,39 +2095,29 @@ MESSAGE_PARTIALLY_DELIVERED. The event contains three arrays of
 addresses: validSent[], validUnsent[], and invalid[] that list the valid
 and invalid addresses for this message and protocol.
 
-[width="100%",cols="50%,50%",]
+[width="100%",cols="40%,60%"]
 |===
 |Transport Event
 |Description
 
-a|
-===  _MESSAGE_DELIVERED_
-
+| `MESSAGE_DELIVERED`
 |When the message has been successfully sent
 to all recipients by this transport. _validSent[]_ contains all the
 addresses. _validUnsent[]_ and _invalid[]_ are null.
 
-a|
-===  _MESSAGE_NOT_DELIVERED_
-
+| `MESSAGE_NOT_DELIVERED`
 |When _ValidSent[]_ is null, the message was
 not successfully sent to any recipients. _validUnsent[]_ may have
 addresses that are valid. _invalidSent[]_ may contain invalid addresses.
 
-a|
-===  _MESSAGE_PARTIALLY_DELIVERED_
-
+| `MESSAGE_PARTIALLY_DELIVERED`
 |Message was successfully sent to some
 recipients but not to all. _ValidSent[]_ holds addresses of recipients
 to whom the message was sent. _validUnsent[]_ holds valid addresses but
 the message wasn't sent to them. _invalid[]_ holds invalid addresses.
 |===
 
-=== 
-
-image:mail-22.png[image]
-
-Using The Transport Class
+=== Using The `Transport` Class
 
 The code segment below sends a MimeMessage
 using a Transport class implementing the SMTP protocol. The client
@@ -2567,84 +2126,53 @@ retrieves a Transport object from the default Session that supports
 sending messages to Internet addresses. Then the Session object uses a
 Transport object to send the message.
 
+[source,java]
+----
 // Get a session
-
-Session session = Session.getInstance(props,
-null);
-
-
+Session session = Session.getInstance(props, null);
 
 // Create an empty MimeMessage and its part
-
 Message msg = new MimeMessage(session);
-
 ... add headers and message parts as before
 
-
-
 // create two destination addresses
+Address[] addrs = {new InternetAddress("mickey@disney.com"),
+    new InternetAddress("goofy@disney.com")};
 
-Address[] addrs = \{new
-InternetAddress("mickey@disney.com"),
-
- new InternetAddress("goofy@disney.com")};
-
-
-
-// get a transport that can handle sending
-message to
-
-// InternetAddresses. This will probably map
-to a transport
-
+// get a transport that can handle sending message to
+// InternetAddresses. This will probably map to a transport
 // that supports SMTP.
+Transport trans = session.getTransport(addrs[0]);
 
-Transport trans =
-session.getTransport(addrs[0]);
-
-
-
-// add ourselves as ConnectionEvent and
-TransportEvent listeners
-
+// add ourselves as ConnectionEvent and TransportEvent listeners
 trans.addConnectionListener(this);
-
 trans.addTransportListener(this);
 
-
-
-// connect method determines what host to use
-from the
-
+// connect method determines what host to use from the
 // session properties
-
 trans.connect();
 
-
-
-// send the message to the addresses we
-specified above
-
+// send the message to the addresses we specified above
 trans.sendMessage(msg, addrs);
-
+----
 
 
 == Internet Mail
 
-The JavaMail specification does not define any
+The Jakarta Mail specification does not define any
 implementation. However, the API does include a set of classes that
 implement Internet Mail standards. Although not part of the
-specification, these classes can be considered part of the JavaMail
+specification, these classes can be considered part of the Jakarta Mail
 package. They show how to adapt an existing messaging architecture to
-the JavaMail framework.
+the Jakarta Mail framework.
 
 These classes implement the Internet Mail
 Standards defined by the RFCs listed below:
 
-RFC822 (Standard for the Format of Internet
+* RFC822 (Standard for the Format of Internet
 Text Messages)
 
-RFC2045, RFC2046, RFC2047 (MIME)
+* RFC2045, RFC2046, RFC2047 (MIME)
 
 RFC822 describes the structure of messages
 exchanged across the Internet. Messages are viewed as having a header
@@ -2663,24 +2191,18 @@ The Internet Mail package allows clients to
 create, use and send messages conforming to the standards listed above.
 It gives service providers a set of base classes and utilities they can
 use to implement Stores and Transports that use the Internet mail
-protocols. link:MailAPI.html#a1917[See MimeMessage Object
-Hierarchy] for a Mime class and interface hierarchy diagram.
+protocols. See <<a1917, MimeMessage Object Hierarchy>> for a Mime class
+and interface hierarchy diagram.
 
-The JavaMail MimePart interface models an
-entity as defined in RFC2045, Section 2.4. MimePart extends the JavaMail
+The Jakarta Mail MimePart interface models an
+entity as defined in RFC2045, Section 2.4. MimePart extends the Jakarta Mail
 Part interface to add MIME-specific methods and semantics. The
 MimeMessage and MimeBodyPart classes implement the MimePart interface.
 The following figure shows the class hierarchy of these classes.
 
-=== 
-
 image:mail-23.png[image]
 
-=== 
-
-image:mail-24.png[image]
-
-The _MimeMessage_ Class
+=== The `MimeMessage` Class
 
 The MimeMessage class extends Message and
 implements MimePart. This class implements an email message that
@@ -2704,33 +2226,23 @@ message object, and finally calls the _send_ method for that MimeMessage
 object.
 
 This code sample creates a new MimeMessage
-object for sending. link:MsgComposition.html#UNKNOWN[] and
-link:Transport.html#UNKNOWN[] for details.
+object for sending. See <<a554, Message Composition>> and
+<<a674, Transport Protocols and Mechanisms>> for details.
 
-
-
+[source,java]
+----
 MimeMessage m = new MimeMessage(session);
-
 // Set FROM:
-
 m.setFrom(new InternetAddress("jmk@Sun.COM"));
-
 // Set TO:
-
 InternetAddress a[] = new InternetAddress[1];
-
-a[0] = new
-InternetAddress("javamail@Sun.COM");
-
+a[0] = new InternetAddress("javamail@Sun.COM");
 m.setRecipients(Message.RecipientType.TO, a);
-
 // Set content
-
 m.setContent(data, "text/plain");
-
 // Send message
-
 Transport.send(m);
+----
 
 The MimeMessage class also provides a
 constructor that uses an input stream to instantiate itself. The
@@ -2738,28 +2250,19 @@ constructor internally invokes the _parse_ method to fill in the
 message. The InputStream object is left positioned at the end of the
 message body.
 
-
-
-InputStream in = getMailSource(); // a stream
-of mail messages
-
+[source,java]
+----
+InputStream in = getMailSource(); // a stream of mail messages
 MimeMessage m = null;
-
-for (; ;) \{
-
- try \{
-
- m = new MimeMessage(session,in);
-
- } catch (MessagingException ex) \{
-
- // reached end of message stream
-
- break;
-
- }
-
+for (;;) {
+    try {
+        m = new MimeMessage(session,in);
+    } catch (MessagingException ex) {
+        // reached end of message stream
+        break;
+    }
 }
+----
 
 MimeMessage implements the writeTo method by
 writing an RFC822-formatted byte stream of its headers and body. This is
@@ -2767,30 +2270,22 @@ accomplished in two steps: First, the MimeMessage object writes out its
 headers; then it delegates the rest to the DataHandler object
 representing the content.
 
-=== 
-
-image:mail-24.png[image]
-
-The _MimeBodyPart_ Class
+=== The `MimeBodyPart` Class
 
 The MimeBodyPart class extends BodyPart and
 implements the MimePart interface. This class represents a Part inside a
 Multipart. MimeBodyPart implements a _Body Part_ as defined by RFC2045,
 Section 2.5.
 
- _The_ getBodyPart(int index) returns the
+The getBodyPart(int index) returns the
 MimeBodyPart object at the given index. MimeMultipart also allows the
 client to fetch MimeBodyPart objects based on their Content-IDs.
 
- _The addBodyPart_ method adds a new
+The addBodyPart method adds a new
 MimeBodyPart object to a MimeMultipart as a step towards constructing a
 new multipart MimeMessage.
 
-=== 
-
-image:mail-24.png[image]
-
-The _MimeMultipart_ Class
+=== The `MimeMultipart` Class
 
 The MimeMultipart class extends Multipart and
 models a MIME multipart content within a message or a body part.
@@ -2818,23 +2313,20 @@ providing additional methods that expose specific functionality.
 
 Note that a multipart content object is
 treated like any other content. When parsing a MIME Multipart stream,
-the JavaMail implementation uses the JAF framework to locate a suitable
+the Jakarta Mail implementation uses the Jakarta Activation framework
+to locate a suitable
 DataContentHandler for the specific subtype and uses that handler to
 create the appropriate Multipart instance. Similarly, when generating
 the output stream for a Multipart object, the appropriate
 DataContentHandler is used to generate the stream.
 
-=== 
-
-image:mail-24.png[image]
-
-The _MimeUtility_ Class
+=== The `MimeUtility` Class
 
 MimeUtility is a utility class that provides
 MIME-related functions. All methods in this class are static methods.
 These methods currently perform the functions listed below:
 
-=== Content Encoding and Decoding
+==== Content Encoding and Decoding
 
 Data sent over RFC 821/822-based mail systems
 are restricted to 7-bit US-ASCII bytes. Therefore, any non-US-ASCII
@@ -2843,16 +2335,16 @@ MIME (RFC 2045) specifies the “base64” and “quoted-printable” encoding
 schemes to perform this encoding. The following methods support content
 encoding:
 
-The getEncoding method takes a DataSource
+* The getEncoding method takes a DataSource
 object and returns the Content-Transfer-Encoding that should be applied
 to the data in that DataSource object to make it mail-safe.
 
-The encode method wraps an encoder around the
+* The encode method wraps an encoder around the
 given output stream based on the specified Content-Transfer-Encoding.
 The decode method decodes the given input stream, based on the specified
 Content-Transfer-Encoding.
 
-=== Header Encoding and Decoding
+==== Header Encoding and Decoding
 
 RFC 822 restricts the data in message headers
 to 7bit US-ASCII characters. MIME (RFC 2047) specifies a mechanism to
@@ -2872,12 +2364,12 @@ non US-ASCII characters.
 The encoding process (based on RFC 2047)
 consists of two steps:
 
-Convert the Unicode String into an array of
+. Convert the Unicode String into an array of
 bytes in another charset. This step is required because Unicode is not
 yet a widely used charset. Therefore, a client must convert the Unicode
 characters into a charset that is more palatable to the recipient.
 
-Apply a suitable encoding format that ensures
+. Apply a suitable encoding format that ensures
 that the bytes obtained in the previous step are mail-safe.
 
 The encodeText method combines the two steps
@@ -2899,11 +2391,7 @@ attempts decoding only if the header value was encoded in RFC 2047
 style. It is advised that you always run header values through the
 decoder to be safe.
 
-=== 
-
-image:mail-24.png[image]
-
-The _ContentType_ Class
+=== The `ContentType` Class
 
 The ContentType class is a utility class that
 parses and generates MIME content-type headers.
@@ -2917,36 +2405,35 @@ that match Content-Type values.
 The following code fragment illustrates the
 use of this class to extract a MIME parameter.
 
+[source,java]
+----
 String type = part.getContentType();
-
 ContentType cType = new ContentType(type);
 
-
-
 if (cType.match("application/x-foobar"))
-
- iString color = cType.getParameter("color");
+    String color = cType.getParameter("color");
+----
 
 This code sample uses this class to construct
 a MIME Content-Type value:
 
+[source,java]
+----
 ContentType cType = new ContentType();
-
 cType.setPrimaryType("application");
-
 cType.setSubType("x-foobar");
-
 cType.setParameter("color", "red");
 
-
-
 String contentType = cType.toString();
+----
 
-== [[a823]]Environment Properties
+[appendix]
+[[a823]]
+== Environment Properties
 
 This section lists some of the environment
-properties that are used by the JavaMail APIs. The JavaMail javadocs
-contain additional information on properties supported by JavaMail.
+properties that are used by the Jakarta Mail APIs. The Jakarta Mail javadocs
+contain additional information on properties supported by Jakarta Mail.
 
 Note that Applets can not determine some
 defaults listed in this Appendix. When writing an applet, you must
@@ -2957,70 +2444,56 @@ specify the properties you require.
 |Property
 |Description
 |Default Value
-a|
-=== mail.store.protocol
 
+| *mail.store.protocol*
 |Specifies the default Message Access
 Protocol. The _Session.getStore()_ method returns a Store object that
 implements this protocol. The client can override this property and
 explicitly specify the protocol with the _Session.getStore(String
-protocol_ _)_ method. |The first appropriate
-protocol in the config files
+protocol_ _)_ method.
+|The first appropriate protocol in the config files
 
-a|
-=== mail.transport.protocol
-
+| *mail.transport.protocol*
 |Specifies the default Transport Protocol. The
 _Session.getTransport()_ method returns a _Transport_ object that
 implements this protocol. The client can override this property and
 explicitly specify the protocol by using _Session.getTransport(String
-protocol) method_ . |The first appropriate
-protocol in the config files
+protocol) method_ .
+|The first appropriate protocol in the config files
 
-a|
-=== mail.host
-
+| *mail.host*
 |Specifies the default Mail server. The
 _Store_ and _Transport object’s_ _connect_ methods use this property, if
 the protocol-specific host property is absent, to locate the target
-host. |The local machine
+host.
+|The local machine
 
-a|
-=== mail.user
-
+| *mail.user*
 |Specifies the username to provide when
 connecting to a Mail server. The _Store_ and _Transport_ object’s
 _connect_ methods use this property, if the protocol-specific username
-property is absent, to obtain the username. |
-_user.name_
+property is absent, to obtain the username.
+| _user.name_
 
-a|
-=== mail.protocol.host
-
+| *mail.__protocol__.host*
 |Specifies the protocol-specific default Mail
 server. This overrides the _mail.host_ property.
 | _mail.host_
 
-a|
-=== mail.protocol.user
-
+| *mail.__protocol__.user*
 |Specifies the protocol-specific default
 username for connecting to the Mail server. This overrides the
-_mail.user_ property. | _mail.user_
+_mail.user_ property.
+| _mail.user_
 
-a|
-=== mail.from
-
+| *mail.from*
 |Specifies the return address of the current
 user. Used by the _InternetAddress.getLocalAddress_ method to specify
-the current user’s email address. |
-_username@host_
+the current user’s email address.
+| _username@host_
 
-a|
-=== mail.debug
-
-a|
-Specifies the initial debug mode. Setting this
+| *mail.debug*
+|Specifies the initial debug mode. Setting this
 property to _true_ will turn on debug mode, while setting it to _false_
 turns debug mode off.
 
@@ -3031,12 +2504,13 @@ controls the debug mode.
 |===
 
 
+[appendix]
+[[a856]]
+== Examples Using the Jakarta Mail API
 
-== [[a856]]Examples Using the JavaMail API
-
- Following are some example programs that
-illustrate the use of the JavaMail APIs. These examples are also
-included in the JavaMail implementation.
+Following are some example programs that
+illustrate the use of the Jakarta Mail APIs. These examples are also
+included in the Jakarta Mail downloads.
 
 
 
@@ -3044,2129 +2518,1092 @@ image:mail-25.png[image]
 
 Example: Showing a Message
 
+[source,java]
+----
 import java.util.*;
-
 import java.io.*;
-
 import javax.mail.*;
-
 import javax.mail.event.*;
-
 import javax.mail.internet.*;
 
-import javax.activation.*;
-
-
-
 /*
-
- * Demo app that exercises the Message
-interfaces.
-
- * Show information about and contents of
-messages.
-
+ * Demo app that exercises the Message interfaces.
+ * Show information about and contents of messages.
  *
-
  * @author John Mani
-
  * @author Bill Shannon
-
  */
 
-
-
-public class msgshow \{
-
-
-
- static String protocol;
-
- static String host = null;
-
- static String user = null;
-
- static String password = null;
-
- static String mbox = null;
-
- static String url = null;
-
- static int port = -1;
-
- static boolean verbose = false;
-
- static boolean debug = false;
-
- static boolean showStructure = false;
-
- static boolean showMessage = false;
-
- static boolean showAlert = false;
-
- static boolean saveAttachments = false;
-
- static int attnum = 1;
-
-
-
- public static void main(String argv[]) \{
-
- int msgnum = -1;
-
- int optind;
-
- InputStream msgStream = System.in;
-
-
-
- for (optind = 0; optind < argv.length;
-optind++) \{
-
- if (argv[optind].equals("-T")) \{
-
- protocol = argv[++optind];
-
- } else if (argv[optind].equals("-H")) \{
-
- host = argv[++optind];
-
- } else if (argv[optind].equals("-U")) \{
-
- user = argv[++optind];
-
- } else if (argv[optind].equals("-P")) \{
-
- password = argv[++optind];
-
- } else if (argv[optind].equals("-v")) \{
-
- verbose = true;
-
- } else if (argv[optind].equals("-D")) \{
-
- debug = true;
-
- } else if (argv[optind].equals("-f")) \{
-
- mbox = argv[++optind];
-
- } else if (argv[optind].equals("-L")) \{
-
- url = argv[++optind];
-
- } else if (argv[optind].equals("-p")) \{
-
- port = Integer.parseInt(argv[++optind]);
-
- } else if (argv[optind].equals("-s")) \{
-
- showStructure = true;
-
- } else if (argv[optind].equals("-S")) \{
-
- saveAttachments = true;
-
- } else if (argv[optind].equals("-m")) \{
-
- showMessage = true;
-
- } else if (argv[optind].equals("-a")) \{
-
- showAlert = true;
-
- } else if (argv[optind].equals("--")) \{
-
- optind++;
-
- break;
-
- } else if (argv[optind].startsWith("-")) \{
-
- System.out.println(
-
-"Usage: msgshow [-L url] [-T protocol] [-H
-host] [-p port] [-U user]");
-
- System.out.println(
-
-"\t[-P password] [-f mailbox] [msgnum] [-v]
-[-D] [-s] [-S] [-a]");
-
- System.out.println(
-
-"or msgshow -m [-v] [-D] [-s] [-S] [-f
-msg-file]");
-
- System.exit(1);
-
- } else \{
-
- break;
-
- }
-
- }
-
-
-
- try \{
-
- if (optind < argv.length)
-
- msgnum = Integer.parseInt(argv[optind]);
-
-
-
- // Get a Properties object
-
- Properties props = System.getProperties();
-
-
-
- // Get a Session object
-
- Session session = Session.getInstance(props,
-null);
-
- session.setDebug(debug);
-
-
-
- if (showMessage) \{
-
- MimeMessage msg;
-
- if (mbox != null)
-
- msg = new MimeMessage(session,
-
- new BufferedInputStream(new
-FileInputStream(mbox)));
-
- else
-
- msg = new MimeMessage(session, msgStream);
-
- dumpPart(msg);
-
- System.exit(0);
-
- }
-
-
-
- // Get a Store object
-
- Store store = null;
-
- if (url != null) \{
-
- URLName urln = new URLName(url);
-
- store = session.getStore(urln);
-
- if (showAlert) \{
-
- store.addStoreListener(new StoreListener() \{
-
- public void notification(StoreEvent e) \{
-
- String s;
-
- if (e.getMessageType() == StoreEvent.ALERT)
-
- s = "ALERT: ";
-
- else
-
- s = "NOTICE: ";
-
- System.out.println(s + e.getMessage());
-
- }
-
- });
-
- }
-
- store.connect();
-
- } else \{
-
- if (protocol != null)
-
- store = session.getStore(protocol);
-
- else
-
- store = session.getStore();
-
-
-
- // Connect
-
- if (host != null || user != null || password
-!= null)
-
- store.connect(host, port, user, password);
-
- else
-
- store.connect();
-
- }
-
-
-
-
-
- // Open the Folder
-
-
-
- Folder folder = store.getDefaultFolder();
-
- if (folder == null) \{
-
- System.out.println("No default folder");
-
- System.exit(1);
-
- }
-
-
-
- if (mbox == null)
-
- mbox = "INBOX";
-
- folder = folder.getFolder(mbox);
-
- if (folder == null) \{
-
- System.out.println("Invalid folder");
-
- System.exit(1);
-
- }
-
-
-
- // try to open read/write and if that fails
-try read-only
-
- try \{
-
- folder.open(Folder.READ_WRITE);
-
- } catch (MessagingException ex) \{
-
- folder.open(Folder.READ_ONLY);
-
- }
-
- int totalMessages = folder.getMessageCount();
-
-
-
- if (totalMessages == 0) \{
-
- System.out.println("Empty folder");
-
- folder.close(false);
-
- store.close();
-
- System.exit(1);
-
- }
-
-
-
- if (verbose) \{
-
- int newMessages =
-folder.getNewMessageCount();
-
- System.out.println("Total messages = " +
-totalMessages);
-
- System.out.println("New messages = " +
-newMessages);
-
-
-System.out.println("-------------------------------");
-
- }
-
-
-
- if (msgnum == -1) \{
-
- // Attributes & Flags for all messages ..
-
- Message[] msgs = folder.getMessages();
-
-
-
- // Use a suitable FetchProfile
-
- FetchProfile fp = new FetchProfile();
-
- fp.add(FetchProfile.Item.ENVELOPE);
-
- fp.add(FetchProfile.Item.FLAGS);
-
- fp.add("X-Mailer");
-
- folder.fetch(msgs, fp);
-
-
-
- for (int i = 0; i < msgs.length; i++) \{
-
-
-System.out.println("--------------------------");
-
- System.out.println("MESSAGE #" + (i + 1) +
-":");
-
- dumpEnvelope(msgs[i]);
-
- // dumpPart(msgs[i]);
-
- }
-
- } else \{
-
- System.out.println("Getting message number: "
-+ msgnum);
-
- Message m = null;
-
-
-
- try \{
-
- m = folder.getMessage(msgnum);
-
- dumpPart(m);
-
- } catch (IndexOutOfBoundsException iex) \{
-
- System.out.println("Message number out of
-range");
-
- }
-
- }
-
-
-
- folder.close(false);
-
- store.close();
-
- } catch (Exception ex) \{
-
- System.out.println("Oops, got exception! " +
-ex.getMessage());
-
- ex.printStackTrace();
-
- System.exit(1);
-
- }
-
- System.exit(0);
-
- }
-
-
-
- public static void dumpPart(Part p) throws
-Exception \{
-
- if (p instanceof Message)
-
- dumpEnvelope((Message)p);
-
-
-
- /** Dump input stream ..
-
-
-
- InputStream is = p.getInputStream();
-
- // If "is" is not already buffered, wrap a
-BufferedInputStream
-
- // around it.
-
- if (!(is instanceof BufferedInputStream))
-
- is = new BufferedInputStream(is);
-
- int c;
-
- while ((c = is.read()) != -1)
-
- System.out.write(c);
-
-
-
- **/
-
-
-
- String ct = p.getContentType();
-
- try \{
-
- pr("CONTENT-TYPE: " + (new
-ContentType(ct)).toString());
-
- } catch (ParseException pex) \{
-
- pr("BAD CONTENT-TYPE: " + ct);
-
- }
-
- String filename = p.getFileName();
-
- if (filename != null)
-
- pr("FILENAME: " + filename);
-
-
-
- /*
-
- * Using isMimeType to determine the content
-type avoids
-
- * fetching the actual content data until we
-need it.
-
- */
-
- if (p.isMimeType("text/plain")) \{
-
- pr("This is plain text");
-
- pr("---------------------------");
-
- if (!showStructure && !saveAttachments)
-
- System.out.println((String)p.getContent());
-
- } else if (p.isMimeType("multipart/*")) \{
-
- pr("This is a Multipart");
-
- pr("---------------------------");
-
- Multipart mp = (Multipart)p.getContent();
-
- level++;
-
- int count = mp.getCount();
-
- for (int i = 0; i < count; i++)
-
- dumpPart(mp.getBodyPart(i));
-
- level--;
-
- } else if (p.isMimeType("message/rfc822")) \{
-
- pr("This is a Nested Message");
-
- pr("---------------------------");
-
- level++;
-
- dumpPart((Part)p.getContent());
-
- level--;
-
- } else \{
-
- if (!showStructure && !saveAttachments) \{
-
- /*
-
- * If we actually want to see the data, and
-it's not a
-
- * MIME type we know, fetch it and check its
-Java type.
-
- */
-
- Object o = p.getContent();
-
- if (o instanceof String) \{
-
- pr("This is a string");
-
- pr("---------------------------");
-
- System.out.println((String)o);
-
- } else if (o instanceof InputStream) \{
-
- pr("This is just an input stream");
-
- pr("---------------------------");
-
- InputStream is = (InputStream)o;
-
- int c;
-
- while ((c = is.read()) != -1)
-
- System.out.write(c);
-
- } else \{
-
- pr("This is an unknown type");
-
- pr("---------------------------");
-
- pr(o.toString());
-
- }
-
- } else \{
-
- // just a separator
-
- pr("---------------------------");
-
- }
-
- }
-
-
-
- /*
-
- * If we're saving attachments, write out
-anything that
-
- * looks like an attachment into an
-appropriately named
-
- * file. Don't overwrite existing files to
-prevent
-
- * mistakes.
-
- */
-
- if (saveAttachments && level != 0 &&
-!p.isMimeType("multipart/*"))\{
-
- String disp = p.getDisposition();
-
- // many mailers don't include a
-Content-Disposition
-
- if (disp == null ||
-disp.equalsIgnoreCase(Part.ATTACHMENT)) \{
-
- if (filename == null)
-
- filename = "Attachment" + attnum++;
-
- pr("Saving attachment to file " + filename);
-
- try \{
-
- File f = new File(filename);
-
- if (f.exists())
-
- // XXX - could try a series of names
-
- throw new IOException("file exists");
-
- ((MimeBodyPart)p).saveFile(f);
-
- } catch (IOException ex) \{
-
- pr("Failed to save attachment: " + ex);
-
- }
-
- pr("---------------------------");
-
- }
-
- }
-
- }
-
-
-
- public static void dumpEnvelope(Message m)
-throws Exception \{
-
- pr("This is the message envelope");
-
- pr("---------------------------");
-
- Address[] a;
-
- // FROM
-
- if ((a = m.getFrom()) != null) \{
-
- for (int j = 0; j < a.length; j++)
-
- pr("FROM: " + a[j].toString());
-
- }
-
-
-
- // TO
-
- if ((a =
-m.getRecipients(Message.RecipientType.TO)) != null) \{
-
- for (int j = 0; j < a.length; j++) \{
-
- pr("TO: " + a[j].toString());
-
- InternetAddress ia = (InternetAddress)a[j];
-
- if (ia.isGroup()) \{
-
- InternetAddress[] aa = ia.getGroup(false);
-
- for (int k = 0; k < aa.length; k++)
-
- pr(" GROUP: " + aa[k].toString());
-
- }
-
- }
-
- }
-
-
-
- // SUBJECT
-
- pr("SUBJECT: " + m.getSubject());
-
-
-
- // DATE
-
- Date d = m.getSentDate();
-
- pr("SendDate: " +
-
- (d != null ? d.toString() : "UNKNOWN"));
-
-
-
- // FLAGS
-
- Flags flags = m.getFlags();
-
- StringBuffer sb = new StringBuffer();
-
- Flags.Flag[] sf = flags.getSystemFlags(); //
-get the system flags
-
-
-
- boolean first = true;
-
- for (int i = 0; i < sf.length; i++) \{
-
- String s;
-
- Flags.Flag f = sf[i];
-
- if (f == Flags.Flag.ANSWERED)
-
- s = "\\Answered";
-
- else if (f == Flags.Flag.DELETED)
-
- s = "\\Deleted";
-
- else if (f == Flags.Flag.DRAFT)
-
- s = "\\Draft";
-
- else if (f == Flags.Flag.FLAGGED)
-
- s = "\\Flagged";
-
- else if (f == Flags.Flag.RECENT)
-
- s = "\\Recent";
-
- else if (f == Flags.Flag.SEEN)
-
- s = "\\Seen";
-
- else
-
- continue; // skip it
-
- if (first)
-
- first = false;
-
- else
-
- sb.append(' ');
-
- sb.append(s);
-
- }
-
-
-
- String[] uf = flags.getUserFlags(); // get
-the user flag strings
-
- for (int i = 0; i < uf.length; i++) \{
-
- if (first)
-
- first = false;
-
- else
-
- sb.append(' ');
-
- sb.append(uf[i]);
-
- }
-
- pr("FLAGS: " + sb.toString());
-
-
-
- // X-MAILER
-
- String[] hdrs = m.getHeader("X-Mailer");
-
- if (hdrs != null)
-
- pr("X-Mailer: " + hdrs[0]);
-
- else
-
- pr("X-Mailer NOT available");
-
- }
-
-
-
- static String indentStr = " ";
-
- static int level = 0;
-
-
-
- /**
-
- * Print a, possibly indented, string.
-
- */
-
- public static void pr(String s) \{
-
- if (showStructure)
-
- System.out.print(indentStr.substring(0, level
-* 2));
-
- System.out.println(s);
-
- }
-
+public class msgshow {
+
+    static String protocol;
+    static String host = null;
+    static String user = null;
+    static String password = null;
+    static String mbox = null;
+    static String url = null;
+    static int port = -1;
+    static boolean verbose = false;
+    static boolean debug = false;
+    static boolean showStructure = false;
+    static boolean showMessage = false;
+    static boolean showAlert = false;
+    static boolean saveAttachments = false;
+    static int attnum = 1;
+
+    public static void main(String argv[]) {
+        int optind;
+        InputStream msgStream = System.in;
+
+        for (optind = 0; optind < argv.length; optind++) {
+            if (argv[optind].equals("-T")) {
+                protocol = argv[++optind];
+            } else if (argv[optind].equals("-H")) {
+                host = argv[++optind];
+            } else if (argv[optind].equals("-U")) {
+                user = argv[++optind];
+            } else if (argv[optind].equals("-P")) {
+                password = argv[++optind];
+            } else if (argv[optind].equals("-v")) {
+                verbose = true;
+            } else if (argv[optind].equals("-D")) {
+                debug = true;
+            } else if (argv[optind].equals("-f")) {
+                mbox = argv[++optind];
+            } else if (argv[optind].equals("-L")) {
+                url = argv[++optind];
+            } else if (argv[optind].equals("-p")) {
+                port = Integer.parseInt(argv[++optind]);
+            } else if (argv[optind].equals("-s")) {
+                showStructure = true;
+            } else if (argv[optind].equals("-S")) {
+                saveAttachments = true;
+            } else if (argv[optind].equals("-m")) {
+                showMessage = true;
+            } else if (argv[optind].equals("-a")) {
+                showAlert = true;
+            } else if (argv[optind].equals("--")) {
+                optind++;
+                break;
+            } else if (argv[optind].startsWith("-")) {
+                System.out.println(
+"Usage: msgshow [-L url] [-T protocol] [-H host] [-p port] [-U user]");
+                System.out.println(
+"\t[-P password] [-f mailbox] [msgnum ...] [-v] [-D] [-s] [-S] [-a]");
+                System.out.println(
+"or     msgshow -m [-v] [-D] [-s] [-S] [-f msg-file]");
+                System.exit(1);
+            } else {
+                break;
+            }
+        }
+
+        try {
+            // Get a Properties object
+            Properties props = System.getProperties();
+
+            // Get a Session object
+            Session session = Session.getInstance(props, null);
+            session.setDebug(debug);
+
+            if (showMessage) {
+                MimeMessage msg;
+                if (mbox != null)
+                    msg = new MimeMessage(session,
+                        new BufferedInputStream(new FileInputStream(mbox)));
+                else
+                    msg = new MimeMessage(session, msgStream);
+                dumpPart(msg);
+                System.exit(0);
+            }
+
+            // Get a Store object
+            Store store = null;
+            if (url != null) {
+                URLName urln = new URLName(url);
+                store = session.getStore(urln);
+                if (showAlert) {
+                    store.addStoreListener(new StoreListener() {
+                        public void notification(StoreEvent e) {
+                            String s;
+                            if (e.getMessageType() == StoreEvent.ALERT)
+                                s = "ALERT: ";
+                            else
+                                s = "NOTICE: ";
+                            System.out.println(s + e.getMessage());
+                        }
+                    });
+                }
+                store.connect();
+            } else {
+                if (protocol != null)           
+                    store = session.getStore(protocol);
+                else
+                    store = session.getStore();
+
+                // Connect
+                if (host != null || user != null || password != null)
+                    store.connect(host, port, user, password);
+                else
+                    store.connect();
+            }
+            
+
+            // Open the Folder
+
+            Folder folder = store.getDefaultFolder();
+            if (folder == null) {
+                System.out.println("No default folder");
+                System.exit(1);
+            }
+
+            if (mbox == null)
+                mbox = "INBOX";
+            folder = folder.getFolder(mbox);
+            if (folder == null) {
+                System.out.println("Invalid folder");
+                System.exit(1);
+            }
+
+            // try to open read/write and if that fails try read-only
+            try {
+                folder.open(Folder.READ_WRITE);
+            } catch (MessagingException ex) {
+                folder.open(Folder.READ_ONLY);
+            }
+            int totalMessages = folder.getMessageCount();
+
+            if (totalMessages == 0) {
+                System.out.println("Empty folder");
+                folder.close(false);
+                store.close();
+                System.exit(1);
+            }
+
+            if (verbose) {
+                int newMessages = folder.getNewMessageCount();
+                System.out.println("Total messages = " + totalMessages);
+                System.out.println("New messages = " + newMessages);
+                System.out.println("-------------------------------");
+            }
+
+            if (optind >= argv.length) {
+                // Attributes & Flags for all messages ..
+                Message[] msgs = folder.getMessages();
+
+                // Use a suitable FetchProfile
+                FetchProfile fp = new FetchProfile();
+                fp.add(FetchProfile.Item.ENVELOPE);
+                fp.add(FetchProfile.Item.FLAGS);
+                fp.add("X-Mailer");
+                folder.fetch(msgs, fp);
+
+                for (int i = 0; i < msgs.length; i++) {
+                    System.out.println("--------------------------");
+                    System.out.println("MESSAGE #" + (i + 1) + ":");
+                    dumpEnvelope(msgs[i]);
+                    // dumpPart(msgs[i]);
+                }
+            } else {
+                while (optind < argv.length) {
+                    int msgnum = Integer.parseInt(argv[optind++]);
+                    System.out.println("Getting message number: " + msgnum);
+                    Message m = null;
+                    
+                    try {
+                        m = folder.getMessage(msgnum);
+                        dumpPart(m);
+                    } catch (IndexOutOfBoundsException iex) {
+                        System.out.println("Message number out of range");
+                    }
+                }
+            }
+
+            folder.close(false);
+            store.close();
+        } catch (Exception ex) {
+            System.out.println("Oops, got exception! " + ex.getMessage());
+            ex.printStackTrace();
+            System.exit(1);
+        }
+        System.exit(0);
+    }
+
+    public static void dumpPart(Part p) throws Exception {
+        if (p instanceof Message)
+            dumpEnvelope((Message)p);
+
+        /** Dump input stream .. 
+
+        InputStream is = p.getInputStream();
+        // If "is" is not already buffered, wrap a BufferedInputStream
+        // around it.
+        if (!(is instanceof BufferedInputStream))
+            is = new BufferedInputStream(is);
+        int c;
+        while ((c = is.read()) != -1)
+            System.out.write(c);
+
+        **/
+
+        String ct = p.getContentType();
+        try {
+            pr("CONTENT-TYPE: " + (new ContentType(ct)).toString());
+        } catch (ParseException pex) {
+            pr("BAD CONTENT-TYPE: " + ct);
+        }
+        String filename = p.getFileName();
+        if (filename != null)
+            pr("FILENAME: " + filename);
+
+        /*
+         * Using isMimeType to determine the content type avoids
+         * fetching the actual content data until we need it.
+         */
+        if (p.isMimeType("text/plain")) {
+            pr("This is plain text");
+            pr("---------------------------");
+            if (!showStructure && !saveAttachments)
+                System.out.println((String)p.getContent());
+        } else if (p.isMimeType("multipart/*")) {
+            pr("This is a Multipart");
+            pr("---------------------------");
+            Multipart mp = (Multipart)p.getContent();
+            level++;
+            int count = mp.getCount();
+            for (int i = 0; i < count; i++)
+                dumpPart(mp.getBodyPart(i));
+            level--;
+        } else if (p.isMimeType("message/rfc822")) {
+            pr("This is a Nested Message");
+            pr("---------------------------");
+            level++;
+            dumpPart((Part)p.getContent());
+            level--;
+        } else {
+            if (!showStructure && !saveAttachments) {
+                /*
+                 * If we actually want to see the data, and it's not a
+                 * MIME type we know, fetch it and check its Java type.
+                 */
+                Object o = p.getContent();
+                if (o instanceof String) {
+                    pr("This is a string");
+                    pr("---------------------------");
+                    System.out.println((String)o);
+                } else if (o instanceof InputStream) {
+                    pr("This is just an input stream");
+                    pr("---------------------------");
+                    InputStream is = (InputStream)o;
+                    int c;
+                    while ((c = is.read()) != -1)
+                        System.out.write(c);
+                } else {
+                    pr("This is an unknown type");
+                    pr("---------------------------");
+                    pr(o.toString());
+                }
+            } else {
+                // just a separator
+                pr("---------------------------");
+            }
+        }
+
+        /*
+         * If we're saving attachments, write out anything that
+         * looks like an attachment into an appropriately named
+         * file.  Don't overwrite existing files to prevent
+         * mistakes.
+         */
+        if (saveAttachments && level != 0 && p instanceof MimeBodyPart &&
+                !p.isMimeType("multipart/*")) {
+            String disp = p.getDisposition();
+            // many mailers don't include a Content-Disposition
+            if (disp == null || disp.equalsIgnoreCase(Part.ATTACHMENT)) {
+                if (filename == null)
+                    filename = "Attachment" + attnum++;
+                pr("Saving attachment to file " + filename);
+                try {
+                    File f = new File(filename);
+                    if (f.exists())
+                        // XXX - could try a series of names
+                        throw new IOException("file exists");
+                    ((MimeBodyPart)p).saveFile(f);
+                } catch (IOException ex) {
+                    pr("Failed to save attachment: " + ex);
+                }
+                pr("---------------------------");
+            }
+        }
+    }
+
+    public static void dumpEnvelope(Message m) throws Exception {
+        pr("This is the message envelope");
+        pr("---------------------------");
+        Address[] a;
+        // FROM 
+        if ((a = m.getFrom()) != null) {
+            for (int j = 0; j < a.length; j++)
+                pr("FROM: " + a[j].toString());
+        }
+
+        // REPLY TO
+        if ((a = m.getReplyTo()) != null) {
+            for (int j = 0; j < a.length; j++)
+                pr("REPLY TO: " + a[j].toString());
+        }
+
+        // TO
+        if ((a = m.getRecipients(Message.RecipientType.TO)) != null) {
+            for (int j = 0; j < a.length; j++) {
+                pr("TO: " + a[j].toString());
+                InternetAddress ia = (InternetAddress)a[j];
+                if (ia.isGroup()) {
+                    InternetAddress[] aa = ia.getGroup(false);
+                    for (int k = 0; k < aa.length; k++)
+                        pr("  GROUP: " + aa[k].toString());
+                }
+            }
+        }
+
+        // SUBJECT
+        pr("SUBJECT: " + m.getSubject());
+
+        // DATE
+        Date d = m.getSentDate();
+        pr("SendDate: " +
+            (d != null ? d.toString() : "UNKNOWN"));
+
+        // FLAGS
+        Flags flags = m.getFlags();
+        StringBuffer sb = new StringBuffer();
+        Flags.Flag[] sf = flags.getSystemFlags(); // get the system flags
+
+        boolean first = true;
+        for (int i = 0; i < sf.length; i++) {
+            String s;
+            Flags.Flag f = sf[i];
+            if (f == Flags.Flag.ANSWERED)
+                s = "\\Answered";
+            else if (f == Flags.Flag.DELETED)
+                s = "\\Deleted";
+            else if (f == Flags.Flag.DRAFT)
+                s = "\\Draft";
+            else if (f == Flags.Flag.FLAGGED)
+                s = "\\Flagged";
+            else if (f == Flags.Flag.RECENT)
+                s = "\\Recent";
+            else if (f == Flags.Flag.SEEN)
+                s = "\\Seen";
+            else
+                continue;       // skip it
+            if (first)
+                first = false;
+            else
+                sb.append(' ');
+            sb.append(s);
+        }
+
+        String[] uf = flags.getUserFlags(); // get the user flag strings
+        for (int i = 0; i < uf.length; i++) {
+            if (first)
+                first = false;
+            else
+                sb.append(' ');
+            sb.append(uf[i]);
+        }
+        pr("FLAGS: " + sb.toString());
+
+        // X-MAILER
+        String[] hdrs = m.getHeader("X-Mailer");
+        if (hdrs != null)
+            pr("X-Mailer: " + hdrs[0]);
+        else
+            pr("X-Mailer NOT available");
+    }
+
+    static String indentStr = "                                               ";
+    static int level = 0;
+
+    /**
+     * Print a, possibly indented, string.
+     */
+    public static void pr(String s) {
+        if (showStructure)
+            System.out.print(indentStr.substring(0, level * 2));
+        System.out.println(s);
+    }
 }
+----
 
-
-
+<<<
 image:mail-25.png[image]
 
 Example: Listing Folders
 
 
-
+[source,java]
+----
 import java.util.Properties;
-
 import javax.mail.*;
-
-
 
 import com.sun.mail.imap.*;
 
-
-
 /**
-
- * Demo app that exercises the Message
-interfaces.
-
+ * Demo app that exercises the Message interfaces.
  * List information about folders.
-
  *
-
  * @author John Mani
-
  * @author Bill Shannon
-
  */
 
+public class folderlist {
+    static String protocol = null;
+    static String host = null;
+    static String user = null;
+    static String password = null;
+    static String url = null;
+    static String root = null;
+    static String pattern = "%";
+    static boolean recursive = false;
+    static boolean verbose = false;
+    static boolean debug = false;
 
-
-public class folderlist \{
-
- static String protocol = null;
-
- static String host = null;
-
- static String user = null;
-
- static String password = null;
-
- static String url = null;
-
- static String root = null;
-
- static String pattern = "%";
-
- static boolean recursive = false;
-
- static boolean verbose = false;
-
- static boolean debug = false;
-
-
-
- public static void main(String argv[]) throws
-Exception \{
-
- int optind;
-
- for (optind = 0; optind < argv.length;
-optind++) \{
-
- if (argv[optind].equals("-T")) \{
-
- protocol = argv[++optind];
-
- } else if (argv[optind].equals("-H")) \{
-
- host = argv[++optind];
-
- } else if (argv[optind].equals("-U")) \{
-
- user = argv[++optind];
-
- } else if (argv[optind].equals("-P")) \{
-
- password = argv[++optind];
-
- } else if (argv[optind].equals("-L")) \{
-
- url = argv[++optind];
-
- } else if (argv[optind].equals("-R")) \{
-
- root = argv[++optind];
-
- } else if (argv[optind].equals("-r")) \{
-
- recursive = true;
-
- } else if (argv[optind].equals("-v")) \{
-
- verbose = true;
-
- } else if (argv[optind].equals("-D")) \{
-
- debug = true;
-
- } else if (argv[optind].equals("--")) \{
-
- optind++;
-
- break;
-
- } else if (argv[optind].startsWith("-")) \{
-
- System.out.println(
-
-"Usage: folderlist [-T protocol] [-H host] [-U
-user] [-P password] [-L url]");
-
- System.out.println(
-
+    public static void main(String argv[]) throws Exception {
+        int optind;
+        for (optind = 0; optind < argv.length; optind++) {
+            if (argv[optind].equals("-T")) {
+                protocol = argv[++optind];
+            } else if (argv[optind].equals("-H")) {
+                host = argv[++optind];
+            } else if (argv[optind].equals("-U")) {
+                user = argv[++optind];
+            } else if (argv[optind].equals("-P")) {
+                password = argv[++optind];
+            } else if (argv[optind].equals("-L")) {
+                url = argv[++optind];
+            } else if (argv[optind].equals("-R")) {
+                root = argv[++optind];
+            } else if (argv[optind].equals("-r")) {
+                recursive = true;
+            } else if (argv[optind].equals("-v")) {
+                verbose = true;
+            } else if (argv[optind].equals("-D")) {
+                debug = true;
+            } else if (argv[optind].equals("--")) {
+                optind++;
+                break;
+            } else if (argv[optind].startsWith("-")) {
+                System.out.println(
+"Usage: folderlist [-T protocol] [-H host] [-U user] [-P password] [-L url]");
+                System.out.println(
 "\t[-R root] [-r] [-v] [-D] [pattern]");
-
- System.exit(1);
-
- } else \{
-
- break;
-
- }
-
- }
-
- if (optind < argv.length)
-
- pattern = argv[optind];
-
-
-
- // Get a Properties object
-
- Properties props = System.getProperties();
-
-
-
- // Get a Session object
-
- Session session = Session.getInstance(props,
-null);
-
- session.setDebug(debug);
-
-
-
- // Get a Store object
-
- Store store = null;
-
- Folder rf = null;
-
- if (url != null) \{
-
- URLName urln = new URLName(url);
-
- store = session.getStore(urln);
-
- store.connect();
-
- } else \{
-
- if (protocol != null)
-
- store = session.getStore(protocol);
-
- else
-
- store = session.getStore();
-
-
-
- // Connect
-
- if (host != null || user != null || password
-!= null)
-
- store.connect(host, user, password);
-
- else
-
- store.connect();
-
- }
-
-
-
- // List namespace
-
- if (root != null)
-
- rf = store.getFolder(root);
-
- else
-
- rf = store.getDefaultFolder();
-
-
-
- dumpFolder(rf, false, "");
-
- if ((rf.getType() & Folder.HOLDS_FOLDERS) !=
-0) \{
-
- Folder[] f = rf.list(pattern);
-
- for (int i = 0; i < f.length; i++)
-
- dumpFolder(f[i], recursive, " ");
-
- }
-
-
-
- store.close();
-
- }
-
-
-
- static void dumpFolder(Folder folder, boolean
-recurse, String tab)
-
- throws Exception \{
-
- System.out.println(tab + "Name: " +
-folder.getName());
-
- System.out.println(tab + "Full Name: " +
-folder.getFullName());
-
- System.out.println(tab + "URL: " +
-folder.getURLName());
-
-
-
- if (verbose) \{
-
- if (!folder.isSubscribed())
-
- System.out.println(tab + "Not Subscribed");
-
-
-
- if ((folder.getType() &
-Folder.HOLDS_MESSAGES) != 0) \{
-
- if (folder.hasNewMessages())
-
- System.out.println(tab + "Has New Messages");
-
- System.out.println(tab + "Total Messages: " +
-
- folder.getMessageCount());
-
- System.out.println(tab + "New Messages: " +
-
- folder.getNewMessageCount());
-
- System.out.println(tab + "Unread Messages: "
-+
-
- folder.getUnreadMessageCount());
-
- }
-
- if ((folder.getType() & Folder.HOLDS_FOLDERS)
-!= 0)
-
- System.out.println(tab + "Is Directory");
-
-
-
- /*
-
- * Demonstrate use of IMAP folder attributes
-
- * returned by the IMAP LIST response.
-
- */
-
- if (folder instanceof IMAPFolder) \{
-
- IMAPFolder f = (IMAPFolder)folder;
-
- String[] attrs = f.getAttributes();
-
- if (attrs != null && attrs.length > 0) \{
-
- System.out.println(tab + "IMAP Attributes:");
-
- for (int i = 0; i < attrs.length; i++)
-
- System.out.println(tab + " " + attrs[i]);
-
- }
-
- }
-
- }
-
-
-
- System.out.println();
-
-
-
- if ((folder.getType() & Folder.HOLDS_FOLDERS)
-!= 0) \{
-
- if (recurse) \{
-
- Folder[] f = folder.list();
-
- for (int i = 0; i < f.length; i++)
-
- dumpFolder(f[i], recurse, tab + " ");
-
- }
-
- }
-
- }
-
+                System.exit(1);
+            } else {
+                break;
+            }
+        }
+        if (optind < argv.length)
+            pattern = argv[optind];
+
+        // Get a Properties object
+        Properties props = System.getProperties();
+
+        // Get a Session object
+        Session session = Session.getInstance(props, null);
+        session.setDebug(debug);
+
+        // Get a Store object
+        Store store = null;
+        Folder rf = null;
+        if (url != null) {
+            URLName urln = new URLName(url);
+            store = session.getStore(urln);
+            store.connect();
+        } else {
+            if (protocol != null)
+                store = session.getStore(protocol);
+            else
+                store = session.getStore();
+
+            // Connect
+            if (host != null || user != null || password != null)
+                store.connect(host, user, password);
+            else
+                store.connect();
+        }
+
+        // List namespace
+        if (root != null)
+            rf = store.getFolder(root);
+        else
+            rf = store.getDefaultFolder();
+
+        dumpFolder(rf, false, "");
+        if ((rf.getType() & Folder.HOLDS_FOLDERS) != 0) {
+            Folder[] f = rf.list(pattern);
+            for (int i = 0; i < f.length; i++)
+                dumpFolder(f[i], recursive, "    ");
+        }
+
+        store.close();
+    }
+
+    static void dumpFolder(Folder folder, boolean recurse, String tab)
+                                        throws Exception {
+        System.out.println(tab + "Name:      " + folder.getName());
+        System.out.println(tab + "Full Name: " + folder.getFullName());
+        System.out.println(tab + "URL:       " + folder.getURLName());
+
+        if (verbose) {
+            if (!folder.isSubscribed())
+                System.out.println(tab + "Not Subscribed");
+
+            if ((folder.getType() & Folder.HOLDS_MESSAGES) != 0) {
+                if (folder.hasNewMessages())
+                    System.out.println(tab + "Has New Messages");
+                System.out.println(tab + "Total Messages:  " +
+                                                folder.getMessageCount());
+                System.out.println(tab + "New Messages:    " +
+                                                folder.getNewMessageCount());
+                System.out.println(tab + "Unread Messages: " +
+                                                folder.getUnreadMessageCount());
+            }
+            if ((folder.getType() & Folder.HOLDS_FOLDERS) != 0)
+                System.out.println(tab + "Is Directory");
+
+            /*
+             * Demonstrate use of IMAP folder attributes
+             * returned by the IMAP LIST response.
+             */
+            if (folder instanceof IMAPFolder) {
+                IMAPFolder f = (IMAPFolder)folder;
+                String[] attrs = f.getAttributes();
+                if (attrs != null && attrs.length > 0) {
+                    System.out.println(tab + "IMAP Attributes:");
+                    for (int i = 0; i < attrs.length; i++)
+                        System.out.println(tab + "    " + attrs[i]);
+                }
+            }
+        }
+
+        System.out.println();
+
+        if ((folder.getType() & Folder.HOLDS_FOLDERS) != 0) {
+            if (recurse) {
+                Folder[] f = folder.list();
+                for (int i = 0; i < f.length; i++)
+                    dumpFolder(f[i], recurse, tab + "    ");
+            }
+        }
+    }
 }
+----
 
-
-
+<<<
 image:mail-25.png[image]
 
 Example: Search a Folder for a Message
 
 
-
+[source,java]
+----
 import java.util.*;
-
 import java.io.*;
-
 import javax.mail.*;
-
 import javax.mail.internet.*;
-
 import javax.mail.search.*;
-
 import javax.activation.*;
 
-
-
 /*
-
- * Search the given folder for messages
-matching the given
-
+ * Search the given folder for messages matching the given
  * criteria.
-
  *
-
  * @author John Mani
-
  */
 
-
-
-public class search \{
-
-
-
- static String protocol = "imap";
-
- static String host = null;
-
- static String user = null;
-
- static String password = null;
-
- static String mbox = "INBOX";
-
- static String url = null;
-
- static boolean debug = false;
-
-
-
- public static void main(String argv[]) \{
-
- int optind;
-
-
-
- String subject = null;
-
- String from = null;
-
- boolean or = false;
-
- boolean today = false;
-
-
-
- for (optind = 0; optind < argv.length;
-optind++) \{
-
- if (argv[optind].equals("-T")) \{
-
- protocol = argv[++optind];
-
- } else if (argv[optind].equals("-H")) \{
-
- host = argv[++optind];
-
- } else if (argv[optind].equals("-U")) \{
-
- user = argv[++optind];
-
- } else if (argv[optind].equals("-P")) \{
-
- password = argv[++optind];
-
- } else if (argv[optind].equals("-or")) \{
-
- or = true;
-
- } else if (argv[optind].equals("-D")) \{
-
- debug = true;
-
- } else if (argv[optind].equals("-f")) \{
-
- mbox = argv[++optind];
-
- } else if (argv[optind].equals("-L")) \{
-
- url = argv[++optind];
-
- } else if (argv[optind].equals("-subject"))
-\{
-
- subject = argv[++optind];
-
- } else if (argv[optind].equals("-from")) \{
-
- from = argv[++optind];
-
- } else if (argv[optind].equals("-today")) \{
-
- today = true;
-
- } else if (argv[optind].equals("--")) \{
-
- optind++;
-
- break;
-
- } else if (argv[optind].startsWith("-")) \{
-
- System.out.println(
-
- "Usage: search [-D] [-L url] [-T protocol]
-[-H host] " +
-
- "[-U user] [-P password] [-f mailbox] " +
-
- "[-subject subject] [-from from] [-or]
-[-today]");
-
- System.exit(1);
-
- } else \{
-
- break;
-
- }
-
- }
-
-
-
- try \{
-
-
-
- if ((subject == null) && (from == null) &&
-!today) \{
-
- System.out.println(
-
- "Specify either -subject, -from or -today");
-
- System.exit(1);
-
- }
-
-
-
- // Get a Properties object
-
- Properties props = System.getProperties();
-
-
-
- // Get a Session object
-
- Session session = Session.getInstance(props,
-null);
-
- session.setDebug(debug);
-
-
-
- // Get a Store object
-
- Store store = null;
-
- if (url != null) \{
-
- URLName urln = new URLName(url);
-
- store = session.getStore(urln);
-
- store.connect();
-
- } else \{
-
- if (protocol != null)
-
- store = session.getStore(protocol);
-
- else
-
- store = session.getStore();
-
-
-
- // Connect
-
- if (host != null || user != null || password
-!= null)
-
- store.connect(host, user, password);
-
- else
-
- store.connect();
-
- }
-
-
-
-
-
- // Open the Folder
-
-
-
- Folder folder = store.getDefaultFolder();
-
- if (folder == null) \{
-
- System.out.println("Cant find default
-namespace");
-
- System.exit(1);
-
- }
-
-
-
- folder = folder.getFolder(mbox);
-
- if (folder == null) \{
-
- System.out.println("Invalid folder");
-
- System.exit(1);
-
- }
-
-
-
- folder.open(Folder.READ_ONLY);
-
- SearchTerm term = null;
-
-
-
- if (subject != null)
-
- term = new SubjectTerm(subject);
-
- if (from != null) \{
-
- FromStringTerm fromTerm = new
-FromStringTerm(from);
-
- if (term != null) \{
-
- if (or)
-
- term = new OrTerm(term, fromTerm);
-
- else
-
- term = new AndTerm(term, fromTerm);
-
- }
-
- else
-
- term = fromTerm;
-
- }
-
- if (today) \{
-
- ReceivedDateTerm dateTerm =
-
- new ReceivedDateTerm(ComparisonTerm.EQ, new
-Date());
-
- if (term != null) \{
-
- if (or)
-
- term = new OrTerm(term, dateTerm);
-
- else
-
- term = new AndTerm(term, dateTerm);
-
- }
-
- else
-
- term = dateTerm;
-
- }
-
-
-
- Message[] msgs = folder.search(term);
-
- System.out.println("FOUND " + msgs.length + "
-MESSAGES");
-
- if (msgs.length == 0) // no match
-
- System.exit(1);
-
-
-
- // Use a suitable FetchProfile
-
- FetchProfile fp = new FetchProfile();
-
- fp.add(FetchProfile.Item.ENVELOPE);
-
- folder.fetch(msgs, fp);
-
-
-
- for (int i = 0; i < msgs.length; i++) \{
-
-
-System.out.println("--------------------------");
-
- System.out.println("MESSAGE #" + (i + 1) +
-":");
-
- dumpPart(msgs[i]);
-
- }
-
-
-
- folder.close(false);
-
- store.close();
-
- } catch (Exception ex) \{
-
- System.out.println("Oops, got exception! " +
-ex.getMessage());
-
- ex.printStackTrace();
-
- }
-
-
-
- System.exit(1);
-
- }
-
-
-
- public static void dumpPart(Part p) throws
-Exception \{
-
- if (p instanceof Message) \{
-
- Message m = (Message)p;
-
- Address[] a;
-
- // FROM
-
- if ((a = m.getFrom()) != null) \{
-
- for (int j = 0; j < a.length; j++)
-
- System.out.println("FROM: " +
-a[j].toString());
-
- }
-
-
-
- // TO
-
- if ((a =
-m.getRecipients(Message.RecipientType.TO)) != null) \{
-
- for (int j = 0; j < a.length; j++)
-
- System.out.println("TO: " + a[j].toString());
-
- }
-
-
-
- // SUBJECT
-
- System.out.println("SUBJECT: " +
-m.getSubject());
-
-
-
- // DATE
-
- Date d = m.getSentDate();
-
- System.out.println("SendDate: " +
-
- (d != null ? d.toLocaleString() :
-"UNKNOWN"));
-
-
-
- // FLAGS:
-
- Flags flags = m.getFlags();
-
- StringBuffer sb = new StringBuffer();
-
- Flags.Flag[] sf = flags.getSystemFlags(); //
-get the sys flags
-
-
-
- boolean first = true;
-
- for (int i = 0; i < sf.length; i++) \{
-
- String s;
-
- Flags.Flag f = sf[i];
-
- if (f == Flags.Flag.ANSWERED)
-
- s = "\\Answered";
-
- else if (f == Flags.Flag.DELETED)
-
- s = "\\Deleted";
-
- else if (f == Flags.Flag.DRAFT)
-
- s = "\\Draft";
-
- else if (f == Flags.Flag.FLAGGED)
-
- s = "\\Flagged";
-
- else if (f == Flags.Flag.RECENT)
-
- s = "\\Recent";
-
- else if (f == Flags.Flag.SEEN)
-
- s = "\\Seen";
-
- else
-
- continue; // skip it
-
- if (first)
-
- first = false;
-
- else
-
- sb.append(' ');
-
- sb.append(s);
-
- }
-
-
-
- String[] uf = flags.getUserFlags(); // get
-the user flag strs
-
- for (int i = 0; i < uf.length; i++) \{
-
- if (first)
-
- first = false;
-
- else
-
- sb.append(' ');
-
- sb.append(uf[i]);
-
- }
-
- System.out.println("FLAGS = " +
-sb.toString());
-
- }
-
-
-
- System.out.println("CONTENT-TYPE: " +
-p.getContentType());
-
-
-
- /* Dump input stream
-
- InputStream is =
-((MimeMessage)m).getInputStream();
-
- int c;
-
- while ((c = is.read()) != -1)
-
- System.out.write(c);
-
- */
-
-
-
- Object o = p.getContent();
-
- if (o instanceof String) \{
-
- System.out.println("This is a String");
-
- System.out.println((String)o);
-
- } else if (o instanceof Multipart) \{
-
- System.out.println("This is a Multipart");
-
- Multipart mp = (Multipart)o;
-
- int count = mp.getCount();
-
- for (int i = 0; i < count; i++)
-
- dumpPart(mp.getBodyPart(i));
-
- } else if (o instanceof InputStream) \{
-
- System.out.println("This is just an input
-stream");
-
- InputStream is = (InputStream)o;
-
- int c;
-
- while ((c = is.read()) != -1)
-
- System.out.write(c);
-
- }
-
- }
-
+public class search {
+
+    static String protocol = "imap";
+    static String host = null;
+    static String user = null;
+    static String password = null;
+    static String mbox = "INBOX";
+    static String url = null;
+    static boolean debug = false;
+
+    public static void main(String argv[]) {
+        int optind;
+
+        String subject = null;
+        String from = null;
+        boolean or = false;
+        boolean today = false;
+        int size = -1;
+
+        for (optind = 0; optind < argv.length; optind++) {
+            if (argv[optind].equals("-T")) {
+                protocol = argv[++optind];
+            } else if (argv[optind].equals("-H")) {
+                host = argv[++optind];
+            } else if (argv[optind].equals("-U")) {
+                user = argv[++optind];
+            } else if (argv[optind].equals("-P")) {
+                password = argv[++optind];
+            } else if (argv[optind].equals("-or")) {
+                or = true;
+            } else if (argv[optind].equals("-D")) {
+                debug = true;
+            } else if (argv[optind].equals("-f")) {
+                mbox = argv[++optind];
+            } else if (argv[optind].equals("-L")) {
+                url = argv[++optind];
+            } else if (argv[optind].equals("-subject")) {
+                subject = argv[++optind];
+            } else if (argv[optind].equals("-from")) {
+                from = argv[++optind];
+            } else if (argv[optind].equals("-today")) {
+                today = true;
+            } else if (argv[optind].equals("-size")) {
+                size = Integer.parseInt(argv[++optind]);
+            } else if (argv[optind].equals("--")) {
+                optind++;
+                break;
+            } else if (argv[optind].startsWith("-")) {
+                System.out.println(
+                 "Usage: search [-D] [-L url] [-T protocol] [-H host] " + 
+                 "[-U user] [-P password] [-f mailbox] " + 
+                 "[-subject subject] [-from from] [-or] [-today]");
+                System.exit(1);
+            } else {
+                break;
+            }
+        }
+
+        try {
+
+            if ((subject == null) && (from == null) && !today && size < 0) {
+                System.out.println(
+                            "Specify either -subject, -from, -today, or -size");
+                System.exit(1);
+            }
+
+            // Get a Properties object
+            Properties props = System.getProperties();
+
+            // Get a Session object
+            Session session = Session.getInstance(props, null);
+            session.setDebug(debug);
+
+            // Get a Store object
+            Store store = null;
+            if (url != null) {
+                URLName urln = new URLName(url);
+                store = session.getStore(urln);
+                store.connect();
+            } else {
+                if (protocol != null)           
+                    store = session.getStore(protocol);
+                else
+                    store = session.getStore();
+
+                // Connect
+                if (host != null || user != null || password != null)
+                    store.connect(host, user, password);
+                else
+                    store.connect();
+            }
+            
+
+            // Open the Folder
+
+            Folder folder = store.getDefaultFolder();
+            if (folder == null) {
+                System.out.println("Cant find default namespace");
+                System.exit(1);
+            }
+
+            folder = folder.getFolder(mbox);
+            if (folder == null) {
+                System.out.println("Invalid folder");
+                System.exit(1);
+            }
+
+            folder.open(Folder.READ_ONLY);
+            SearchTerm term = null;
+
+            if (subject != null)
+                term = new SubjectTerm(subject);
+            if (from != null) {
+                FromStringTerm fromTerm = new FromStringTerm(from);
+                if (term != null) {
+                    if (or)
+                        term = new OrTerm(term, fromTerm);
+                    else
+                        term = new AndTerm(term, fromTerm);
+                }
+                else
+                    term = fromTerm;
+            }
+            if (today) {
+                Calendar c = Calendar.getInstance();
+                c.set(Calendar.HOUR, 0);
+                c.set(Calendar.MINUTE, 0);
+                c.set(Calendar.SECOND, 0);
+                c.set(Calendar.MILLISECOND, 0);
+                c.set(Calendar.AM_PM, Calendar.AM);
+                ReceivedDateTerm startDateTerm = 
+                 new ReceivedDateTerm(ComparisonTerm.GE, c.getTime());
+                c.add(Calendar.DATE, 1);        // next day
+                ReceivedDateTerm endDateTerm = 
+                 new ReceivedDateTerm(ComparisonTerm.LT, c.getTime());
+                SearchTerm dateTerm = new AndTerm(startDateTerm, endDateTerm);
+                if (term != null) {
+                    if (or)
+                        term = new OrTerm(term, dateTerm);
+                    else
+                        term = new AndTerm(term, dateTerm);
+                }
+                else
+                    term = dateTerm;
+            }
+
+            if (size >= 0) {
+                SizeTerm sizeTerm = new SizeTerm(ComparisonTerm.GT, size);
+                if (term != null) {
+                    if (or)
+                        term = new OrTerm(term, sizeTerm);
+                    else
+                        term = new AndTerm(term, sizeTerm);
+                }
+                else
+                    term = sizeTerm;
+            }
+
+            Message[] msgs = folder.search(term);
+            System.out.println("FOUND " + msgs.length + " MESSAGES");
+            if (msgs.length == 0) // no match
+                System.exit(1);
+
+            // Use a suitable FetchProfile
+            FetchProfile fp = new FetchProfile();
+            fp.add(FetchProfile.Item.ENVELOPE);
+            folder.fetch(msgs, fp);
+
+            for (int i = 0; i < msgs.length; i++) {
+                System.out.println("--------------------------");
+                System.out.println("MESSAGE #" + (i + 1) + ":");
+                dumpPart(msgs[i]);
+            }
+
+            folder.close(false);
+            store.close();
+        } catch (Exception ex) {
+            System.out.println("Oops, got exception! " + ex.getMessage());
+            ex.printStackTrace();
+        }
+
+        System.exit(1);
+    }
+
+    public static void dumpPart(Part p) throws Exception {
+        if (p instanceof Message) {
+            Message m = (Message)p;
+            Address[] a;
+            // FROM 
+            if ((a = m.getFrom()) != null) {
+                for (int j = 0; j < a.length; j++)
+                    System.out.println("FROM: " + a[j].toString());
+            }
+
+            // TO
+            if ((a = m.getRecipients(Message.RecipientType.TO)) != null) {
+                for (int j = 0; j < a.length; j++)
+                    System.out.println("TO: " + a[j].toString());
+            }
+
+            // SUBJECT
+            System.out.println("SUBJECT: " + m.getSubject());
+
+            // DATE
+            Date d = m.getSentDate();
+            System.out.println("SendDate: " +
+                (d != null ? d.toLocaleString() : "UNKNOWN"));
+
+            // FLAGS:
+            Flags flags = m.getFlags();
+            StringBuffer sb = new StringBuffer();
+            Flags.Flag[] sf = flags.getSystemFlags(); // get the system flags
+
+            boolean first = true;
+            for (int i = 0; i < sf.length; i++) {
+                String s;
+                Flags.Flag f = sf[i];
+                if (f == Flags.Flag.ANSWERED)
+                    s = "\\Answered";
+                else if (f == Flags.Flag.DELETED)
+                    s = "\\Deleted";
+                else if (f == Flags.Flag.DRAFT)
+                    s = "\\Draft";
+                else if (f == Flags.Flag.FLAGGED)
+                    s = "\\Flagged";
+                else if (f == Flags.Flag.RECENT)
+                    s = "\\Recent";
+                else if (f == Flags.Flag.SEEN)
+                    s = "\\Seen";
+                else
+                    continue;   // skip it
+                if (first)
+                    first = false;
+                else
+                    sb.append(' ');
+                sb.append(s);
+            }
+
+            String[] uf = flags.getUserFlags(); // get the user flag strings
+            for (int i = 0; i < uf.length; i++) {
+                if (first)
+                    first = false;
+                else
+                    sb.append(' ');
+                sb.append(uf[i]);
+            }
+            System.out.println("FLAGS = " + sb.toString());
+        }
+
+        System.out.println("CONTENT-TYPE: " + p.getContentType());
+
+        /* Dump input stream
+        InputStream is = ((MimeMessage)m).getInputStream();
+        int c;
+        while ((c = is.read()) != -1)
+            System.out.write(c);
+        */
+
+        Object o = p.getContent();
+        if (o instanceof String) {
+            System.out.println("This is a String");
+            System.out.println((String)o);
+        } else if (o instanceof Multipart) {
+            System.out.println("This is a Multipart");
+            Multipart mp = (Multipart)o;
+            int count = mp.getCount();
+            for (int i = 0; i < count; i++)
+                dumpPart(mp.getBodyPart(i));
+        } else if (o instanceof InputStream) {
+            System.out.println("This is just an input stream");
+            InputStream is = (InputStream)o;
+            int c;
+            while ((c = is.read()) != -1)
+                System.out.write(c);
+        }
+    }
 }
+----
 
-
-
+<<<
 image:mail-25.png[image]
 
 Example: Monitoring a Mailbox
 
 
-
+[source,java]
+----
 import java.util.*;
-
 import java.io.*;
-
 import javax.mail.*;
-
 import javax.mail.event.*;
-
 import javax.activation.*;
 
-
+import com.sun.mail.imap.*;
 
 /* Monitors given mailbox for new mail */
 
-
-
-public class monitor \{
-
-
-
- public static void main(String argv[]) \{
-
- if (argv.length != 5) \{
-
- System.out.println(
-
-"Usage: monitor <host> <user> <password>
-<mbox> <freq>");
-
- System.exit(1);
-
- }
-
- System.out.println("\nTesting monitor\n");
-
-
-
- try \{
-
- Properties props = System.getProperties();
-
-
-
- // Get a Session object
-
- Session session = Session.getInstance(props,
-null);
-
- // session.setDebug(true);
-
-
-
- // Get a Store object
-
- Store store = session.getStore("imap");
-
-
-
- // Connect
-
- store.connect(argv[0], argv[1], argv[2]);
-
-
-
- // Open a Folder
-
- Folder folder = store.getFolder(argv[3]);
-
- if (folder == null || !folder.exists()) \{
-
- System.out.println("Invalid folder");
-
- System.exit(1);
-
- }
-
-
-
- folder.open(Folder.READ_WRITE);
-
-
-
- // Add messageCountListener to listen for new
-messages
-
- folder.addMessageCountListener(new
-MessageCountAdapter() \{
-
- public void messagesAdded(MessageCountEvent
-ev) \{
-
- Message[] msgs = ev.getMessages();
-
- System.out.println("Got " + msgs.length +
-
- " new messages");
-
-
-
- // Just dump out the new messages
-
- for (int i = 0; i < msgs.length; i++) \{
-
- try \{
-
- DataHandler dh = msgs[i].getDataHandler();
-
- InputStream is = dh.getInputStream();
-
- int c;
-
- while ((c = is.read()) != -1)
-
- System.out.write(c);
-
- } catch (IOException ioex) \{
-
- ioex.printStackTrace();
-
- } catch (MessagingException mex) \{
-
- mex.printStackTrace();
-
- }
-
- }
-
- }
-
- });
-
-
-
- // Check mail once in "freq" MILLIseconds
-
-
-
- int freq = Integer.parseInt(argv[4]);
-
-
-
- for (; ;) \{
-
- Thread.sleep(freq); // sleep for freq
-milliseconds
-
-
-
- // This is to force the IMAP server to send
-us
-
- // EXISTS notifications.
-
- folder.getMessageCount();
-
- }
-
-
-
- } catch (Exception ex) \{
-
- ex.printStackTrace();
-
- }
-
- }
-
+public class monitor {
+
+    public static void main(String argv[]) {
+        if (argv.length != 5) {
+            System.out.println(
+                "Usage: monitor <host> <user> <password> <mbox> <freq>");
+            System.exit(1);
+        }
+        System.out.println("\nTesting monitor\n");
+
+        try {
+            Properties props = System.getProperties();
+
+            // Get a Session object
+            Session session = Session.getInstance(props, null);
+            // session.setDebug(true);
+
+            // Get a Store object
+            Store store = session.getStore("imap");
+
+            // Connect
+            store.connect(argv[0], argv[1], argv[2]);
+
+            // Open a Folder
+            Folder folder = store.getFolder(argv[3]);
+            if (folder == null || !folder.exists()) {
+                System.out.println("Invalid folder");
+                System.exit(1);
+            }
+
+            folder.open(Folder.READ_WRITE);
+
+            // Add messageCountListener to listen for new messages
+            folder.addMessageCountListener(new MessageCountAdapter() {
+                public void messagesAdded(MessageCountEvent ev) {
+                    Message[] msgs = ev.getMessages();
+                    System.out.println("Got " + msgs.length + " new messages");
+
+                    // Just dump out the new messages
+                    for (int i = 0; i < msgs.length; i++) {
+                        try {
+                            System.out.println("-----");
+                            System.out.println("Message " +
+                                msgs[i].getMessageNumber() + ":");
+                            msgs[i].writeTo(System.out);
+                        } catch (IOException ioex) { 
+                            ioex.printStackTrace();     
+                        } catch (MessagingException mex) {
+                            mex.printStackTrace();
+                        }
+                    }
+                }
+            });
+                        
+            // Check mail once in "freq" MILLIseconds
+            int freq = Integer.parseInt(argv[4]);
+            boolean supportsIdle = false;
+            try {
+                if (folder instanceof IMAPFolder) {
+                    IMAPFolder f = (IMAPFolder)folder;
+                    f.idle();
+                    supportsIdle = true;
+                }
+            } catch (FolderClosedException fex) {
+                throw fex;
+            } catch (MessagingException mex) {
+                supportsIdle = false;
+            }
+            for (;;) {
+                if (supportsIdle && folder instanceof IMAPFolder) {
+                    IMAPFolder f = (IMAPFolder)folder;
+                    f.idle();
+                    System.out.println("IDLE done");
+                } else {
+                    Thread.sleep(freq); // sleep for freq milliseconds
+
+                    // This is to force the IMAP server to send us
+                    // EXISTS notifications. 
+                    folder.getMessageCount();
+                }
+            }
+
+        } catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
 }
+----
 
-
-
+<<<
 image:mail-25.png[image]
 
 Example: Sending a Message
 
 
-
+[source,java]
+----
 import java.util.*;
-
 import java.io.*;
-
 import javax.mail.*;
-
 import javax.mail.internet.*;
-
 import javax.activation.*;
 
-
-
 /**
-
- * msgmultisendsample creates a simple
-multipart/mixed message and sends
-
- * it. Both body parts are text/plain.
-
+ * msgmultisendsample creates a simple multipart/mixed message and sends it.
+ * Both body parts are text/plain.
  * <p>
-
- * usage: <code>java msgmultisendsample <i>to
-from smtp true|false</i></code>
-
- * where <i>to</i> and <i>from</i> are the
-destination and
-
- * origin email addresses, respectively, and
-<i>smtp</i>
-
- * is the hostname of the machine that has
-smtp server
-
- * running. The last parameter either turns on
-or turns off
-
+ * usage: <code>java msgmultisendsample <i>to from smtp true|false</i></code>
+ * where <i>to</i> and <i>from</i> are the destination and
+ * origin email addresses, respectively, and <i>smtp</i>
+ * is the hostname of the machine that has smtp server
+ * running.  The last parameter either turns on or turns off
  * debugging during sending.
-
  *
-
- * @author Max Spivak
-
+ * @author      Max Spivak
  */
-
-public class msgmultisendsample \{
-
- static String msgText1 = "This is a message
-body.\nHere's line two.";
-
- static String msgText2 = "This is the text in
-the message attachment.";
-
-
-
- public static void main(String[] args) \{
-
- if (args.length != 4) \{
-
- System.out.println(
-
-"usage: java msgmultisend <to> <from> <smtp>
-true|false");
-
- return;
-
- }
-
-
-
- String to = args[0];
-
- String from = args[1];
-
- String host = args[2];
-
- boolean debug =
-Boolean.valueOf(args[3]).booleanValue();
-
-
-
- // create some properties and get the default
-Session
-
- Properties props = new Properties();
-
- props.put("mail.smtp.host", host);
-
-
-
- Session session = Session.getInstance(props,
-null);
-
- session.setDebug(debug);
-
-
-
- try \{
-
- // create a message
-
- MimeMessage msg = new MimeMessage(session);
-
- msg.setFrom(new InternetAddress(from));
-
- InternetAddress[] address = \{new
-InternetAddress(to)};
-
- msg.setRecipients(Message.RecipientType.TO,
-address);
-
- msg.setSubject("JavaMail APIs Multipart
-Test");
-
- msg.setSentDate(new Date());
-
-
-
- // create and fill the first message part
-
- MimeBodyPart mbp1 = new MimeBodyPart();
-
- mbp1.setText(msgText1);
-
-
-
- // create and fill the second message part
-
- MimeBodyPart mbp2 = new MimeBodyPart();
-
- // Use setText(text, charset), to show it off
-!
-
- mbp2.setText(msgText2, "us-ascii");
-
-
-
- // create the Multipart and its parts to it
-
- Multipart mp = new MimeMultipart();
-
- mp.addBodyPart(mbp1);
-
- mp.addBodyPart(mbp2);
-
-
-
- // add the Multipart to the message
-
- msg.setContent(mp);
-
-
-
- // send the message
-
- Transport.send(msg);
-
- } catch (MessagingException mex) \{
-
- mex.printStackTrace();
-
- Exception ex = null;
-
- if ((ex = mex.getNextException()) != null) \{
-
- ex.printStackTrace();
-
- }
-
- }
-
- }
-
+public class msgmultisendsample {
+    static String msgText1 = "This is a message body.\nHere's line two.";
+    static String msgText2 = "This is the text in the message attachment.";
+
+    public static void main(String[] args) {
+        if (args.length != 4) {
+            System.out.println("usage: java msgmultisend <to> <from> <smtp> true|false");
+            return;
+        }
+
+        String to = args[0];
+        String from = args[1];
+        String host = args[2];
+        boolean debug = Boolean.valueOf(args[3]).booleanValue();
+
+        // create some properties and get the default Session
+        Properties props = new Properties();
+        props.put("mail.smtp.host", host);
+
+        Session session = Session.getInstance(props, null);
+        session.setDebug(debug);
+        
+        try {
+            // create a message
+            MimeMessage msg = new MimeMessage(session);
+            msg.setFrom(new InternetAddress(from));
+            InternetAddress[] address = {new InternetAddress(to)};
+            msg.setRecipients(Message.RecipientType.TO, address);
+            msg.setSubject("Jakarta Mail APIs Multipart Test");
+            msg.setSentDate(new Date());
+
+            // create and fill the first message part
+            MimeBodyPart mbp1 = new MimeBodyPart();
+            mbp1.setText(msgText1);
+
+            // create and fill the second message part
+            MimeBodyPart mbp2 = new MimeBodyPart();
+            // Use setText(text, charset), to show it off !
+            mbp2.setText(msgText2, "us-ascii");
+
+            // create the Multipart and its parts to it
+            Multipart mp = new MimeMultipart();
+            mp.addBodyPart(mbp1);
+            mp.addBodyPart(mbp2);
+
+            // add the Multipart to the message
+            msg.setContent(mp);
+            
+            // send the message
+            Transport.send(msg);
+        } catch (MessagingException mex) {
+            mex.printStackTrace();
+            Exception ex = null;
+            if ((ex = mex.getNextException()) != null) {
+                ex.printStackTrace();
+            }
+        }
+    }
 }
+----
 
 
-
+[appendix]
 == Message Security
 
-
-
-image:mail-26.png[image]
-
-Overview
+=== Overview
 
 This is not a full specification of how
-Message Security will be integrated into the JavaMail system. This is a
+Message Security will be integrated into the Jakarta Mail system. This is a
 description of implementation strategy. The purpose of this section is
 to declare that it is possible to integrate message security, not to
 define how it will be integrated. The final design for Message Security
@@ -5179,7 +3616,7 @@ Security Restrictions on untrusted or signed applets will work, nor will
 it discuss a general authentication model for Stores (For example; a GSS
 API in the Java platform.)
 
-=== Displaying an Encrypted/Signed Message
+==== Displaying an Encrypted/Signed Message
 
 Displaying an encrypted or signed message is
 the same as displaying any other message. The client uses the
@@ -5189,9 +3626,9 @@ a multipart/signed and multipart/encrypted viewer bean (can be the same
 bean). The beans will need to be aware of the
 MultiPartSigned/MultiPartEncrypted classes.
 
-=== MultiPartEncrypted/Signed Classes
+==== MultiPartEncrypted/Signed Classes
 
-The JavaMail API will probably add two new
+The Jakarta Mail API will probably add two new
 content classes: _MultiPartEncrypted_ and _MultiPartSigned_ . They
 subclass the _MultiPart_ class and handle the MIME types
 multipart/encrypted and multipart/signed. There are many possible
@@ -5204,43 +3641,30 @@ _MultiPart_ classes will hand off the control information, other
 parameters, and the data to be manipulated (either the signed or
 encrypted block) through some defined _Protocol_ interface.
 
-=== Reading the Contents
+==== Reading the Contents
 
 There will be times when an applet/application
 needs to retrieve the content of the message without displaying it. The
 code sample below shows one possible technique with a message containing
 encrypted content:
 
-Message msg = // message gotten from some
-folder.
+[source,java]
+----
+Message msg = // message gotten from some folder.
+if (msg.isMimeType("multipart/encrypted")) {
+    Object o = msg.getContent();
+    if (o instanceof MultiPartEncrypted) {
+        MultiPartEncrypted mpe = (MultiPartEncrypted) o;
+        mpe.decrypt();
+            // use the default keys/certs from the user.
+            // We should also be able to determine
+            // whether or not to interact with the user
 
-if (msg.isMimeType("multipart/encrypted")) \{
-
- Object o = msg.getContent();
-
- if (o instanceof MultiPartEncrypted) \{
-
- MultiPartEncrypted mpe = (MultiPartEncrypted)
-o;
-
- mpe.decrypt();
-
- // use the default keys/certs from the user.
-
- // We should alsobe able to determine
-
- // whether or not to interact with the user
-
-
-
- // should then be able to use the multipart
-methods to
-
- // get any contained blocks }
-
- }
-
+        // should then be able to use the multipart methods to
+        // get any contained blocks
+    }
 }
+----
 
 The _getContent_ method returns a
 _MultiPartEncrypted_ object. There will be methods on this class to
@@ -5248,41 +3672,33 @@ decrypt the content. The decryption could either determine which keys
 needed to be used, use the defaults (maybe the current user’s keys) or
 explicitly pass which keys/certificates to use.
 
-=== Verifying Signatures
+==== Verifying Signatures
 
 Applications/applets will need to verify the
 validity of a signature. The code sample below shows how this might be
 done:
 
-Message msg = // message gotten from some
-folder
+[source,java]
+----
+Message msg = // message gotten from some folder
+if (msg.isMimeType("multipart/signed")) {
+    Object o = msg.getContent();
+    if (o instanceof MultiPartSigned) {
+        MultiPartSigned mps = (MultiPartSigned) o;
+        boolean validsig = mps.verifySignature();
 
-if (msg.isMimeType("multipart/signed")) \{
-
- Object o = msg.getContent();
-
- if (o instanceof MultiPartSigned) \{
-
- MultiPartSigned mps = (MultiPartSigned) o;
-
- boolean validsig = mps.verifySignature();
-
-
-
- // could already get the other blocks
-
- // even if it wasn't a valid signature
-
- }
-
+        // could already get the other blocks
+        // even if it wasn't a valid signature
+    }
 }
+----
 
 If the signature is invalid, the application
 can still access the data. There will be methods in _MultiPartSigned_
 that allow the setting of which keys or certificates to use when
 verifying the signature.
 
-=== Creating a Message
+==== Creating a Message
 
 There are two methods for creating an
 Encrypted/Signed message. Users will probably see an editor bean for the
@@ -5291,37 +3707,26 @@ would handle the UI components to allow the user to select how they want
 to encrypt/sign the message. The beans could be integrated into an
 application’s Message Composition window.
 
-=== Encrypted/Signed
+==== Encrypted/Signed
 
 The non-GUI method of creating the messages
 involves using the MultiPartEncrypted/Signed classes. The classes can be
 created and used as the content for a message. The following code shows
 how might work:
 
-MultiPartEncrypted mpe = new
-MultiPartEncrypted();
-
-// Can setup parameters for how you want to
-encrypt the
-
-// message; otherwise, it will use the user's
-preferences.
-
-// Set the content you wish to encrypt (to
-encrypt multiple
-
-// contents a multipart/mixed block should be
-used)
-
+[source,java]
+----
+MultiPartEncrypted mpe = new MultiPartEncrypted();
+// Can setup parameters for how you want to encrypt the
+// message; otherwise, it will use the user's preferences.
+// Set the content you wish to encrypt (to encrypt multiple
+// contents a multipart/mixed block should be used)
 String ourContent = "Please encrypt me!";
-
 mpe.setContent(ourContent);
 
-
-
 MimeMessage m = new MimeMessage(session);
-
 m.setContent(mpe);
+----
 
 The message will be encrypted when the message
 is sent. There will be other methods that allow the setting of which
@@ -5332,23 +3737,21 @@ similar to creating a Multipart Encrypted message, except that a
 Multipart Signed object is created instead.
 
 
-
+[appendix]
 == Part and Multipart Class Diagram
 
 This appendix illustrates relationships
 between Part interfaces and Message classes.
 
-=== 
-
 image:mail-27.png[image]
 
- +
-[[a1917]]MimeMessage Object Hierarchy
+
+[appendix]
+[[a1917]]
+== MimeMessage Object Hierarchy
 
 This appendix illustrates the object
 hierarchy.
-
-=== 
 
 image:mail-28.png[image]
 

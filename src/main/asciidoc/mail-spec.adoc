@@ -1,7 +1,3 @@
-//
-// Copyright (c) 2017, 2019 Oracle and/or its affiliates. All rights reserved.
-//
-
 = Jakarta Mail
 :authors: Jakarta Mail Team, https://projects.eclipse.org/projects/ee4j.mail
 :email: https://dev.eclipse.org/mailman/listinfo/mail-dev
