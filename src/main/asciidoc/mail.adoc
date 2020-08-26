@@ -2522,9 +2522,9 @@ included in the Jakarta Mail downloads.
 ----
 import java.util.*;
 import java.io.*;
-import javax.mail.*;
-import javax.mail.event.*;
-import javax.mail.internet.*;
+import jakarta.mail.*;
+import jakarta.mail.event.*;
+import jakarta.mail.internet.*;
 
 /*
  * Demo app that exercises the Message interfaces.
@@ -2944,7 +2944,7 @@ public class msgshow {
 [source,java]
 ----
 import java.util.Properties;
-import javax.mail.*;
+import jakarta.mail.*;
 
 import com.sun.mail.imap.*;
 
@@ -3108,10 +3108,10 @@ public class folderlist {
 ----
 import java.util.*;
 import java.io.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.mail.search.*;
-import javax.activation.*;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
+import jakarta.mail.search.*;
+import jakarta.activation.*;
 
 /*
  * Search the given folder for messages matching the given
@@ -3408,9 +3408,9 @@ public class search {
 ----
 import java.util.*;
 import java.io.*;
-import javax.mail.*;
-import javax.mail.event.*;
-import javax.activation.*;
+import jakarta.mail.*;
+import jakarta.mail.event.*;
+import jakarta.activation.*;
 
 import com.sun.mail.imap.*;
 
@@ -3514,9 +3514,9 @@ public class monitor {
 ----
 import java.util.*;
 import java.io.*;
-import javax.mail.*;
-import javax.mail.internet.*;
-import javax.activation.*;
+import jakarta.mail.*;
+import jakarta.mail.internet.*;
+import jakarta.activation.*;
 
 /**
  * msgmultisendsample creates a simple multipart/mixed message and sends it.
