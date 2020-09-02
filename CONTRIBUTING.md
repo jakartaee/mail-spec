@@ -7,7 +7,7 @@ Thanks for your interest in this project.
 The Jakarta Mail API provides a platform-independent and protocol-independent
 framework to build mail and messaging applications. The Jakarta Mail API is
 available as an optional package for use with the Java SE platform and is also
-included in the Java EE platform.
+included in the Jakarta EE platform.
 
 * [https://projects.eclipse.org/projects/ee4j.mail](https://projects.eclipse.org/projects/ee4j.mail)
 
