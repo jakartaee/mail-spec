@@ -1,3 +1,7 @@
+//
+// Copyright (c) 2017, 2022 Contributors to the Eclipse Foundation
+//
+
 <<<
 == Introduction
 
@@ -192,7 +196,7 @@ different message stores and using different message transport
 protocols.
 
 
-image:mail-4.svg[image]
+image:images/mail-4.svg[image]
 
 
 
@@ -203,7 +207,7 @@ interfaces comprising the Jakarta Mail API.
 See <<a63, Major Jakarta Mail API Components>> for
 brief descriptions of all components shown on this diagram.
 
-image:mail-5.svg[image]
+image:images/mail-5.svg[image]
 
 === The Jakarta Mail Framework
 
@@ -236,7 +240,7 @@ functionality.
 This figure illustrates the Jakarta Mail
 message-handling process.
 
-image:mail-7.svg[image]
+image:images/mail-7.svg[image]
 
 
 [[a63]]
@@ -424,7 +428,7 @@ the folder.
 The figure below illustrates the structure of
 the Message class.
 
-image:mail-8.svg[image]
+image:images/mail-8.svg[image]
 
 The Message object has no direct knowledge of
 the nature or semantics of its content. This separation of structure
@@ -451,7 +455,7 @@ flags, and content.
 See <<a1917, MimeMessage Object Hierarchy>> for an illustration of
 the MimeMessage object hierarchy.
 
-image:mail-9.svg[image]
+image:images/mail-9.svg[image]
 
 The Message class provides methods to perform
 the following tasks:
@@ -598,7 +602,7 @@ container object, or a DataHandler object.
 The figure below illustrates the structure and
 content of a multipart message:
 
-image:mail-12.svg[image]
+image:images/mail-12.svg[image]
 
 Note that Multipart objects can be nested to
 any reasonable depth within a multipart message, in order to build an
@@ -607,7 +611,7 @@ Therefore, it is important to check the ContentType header for each
 BodyPart element stored within a Multipart container. The figure below
 illustrates a typical nested Multipart message.
 
-image:mail-13.svg[image]
+image:images/mail-13.svg[image]
 
 Typically, the client calls the getContentType
 method to get the content type of a message. If getContentType returns a
@@ -642,7 +646,7 @@ multipart message, and shows calls from the associated _Message_ and
 Multipart objects, for a typical call sequence returning a BodyPart
 containing text/plain content.
 
-image:mail-14.svg[image]
+image:images/mail-14.svg[image]
 
 In this figure, the _ContentType_ attribute of
 a Message object indicates that it holds a multipart content. Use the
@@ -1433,7 +1437,7 @@ if the client is notified that messages A and C are removed, it should
 account for the renumbering of the remaining messages as shown in the
 second figure.
 
-image:mail-17.svg[image]
+image:images/mail-17.svg[image]
 
 * The client should prune expunged messages from
 its internal storage as early as possible.
@@ -2200,7 +2204,7 @@ Part interface to add MIME-specific methods and semantics. The
 MimeMessage and MimeBodyPart classes implement the MimePart interface.
 The following figure shows the class hierarchy of these classes.
 
-image:mail-23.svg[image]
+image:images/mail-23.svg[image]
 
 === The `MimeMessage` Class
 
@@ -3739,7 +3743,7 @@ Multipart Signed object is created instead.
 This appendix illustrates relationships
 between Part interfaces and Message classes.
 
-image:mail-27.svg[image]
+image:images/mail-27.svg[image]
 
 
 [appendix]
@@ -3749,5 +3753,5 @@ image:mail-27.svg[image]
 This appendix illustrates the object
 hierarchy.
 
-image:mail-28.svg[image]
+image:images/mail-28.svg[image]
 

@@ -1,3 +1,7 @@
+//
+// Copyright (c) 2017, 2022 Contributors to the Eclipse Foundation
+//
+
 = Jakarta Mail
 :authors: Jakarta Mail Team, https://projects.eclipse.org/projects/ee4j.mail
 :email: https://dev.eclipse.org/mailman/listinfo/mail-dev
@@ -12,7 +16,7 @@
 ifdef::backend-pdf[]
 :pagenums:
 :numbered:
-:title-logo-image: image:jakarta_ee_logo_schooner_color_stacked_default.png[pdfwidth=4.25in,align=right]
+:title-logo-image: image:images/jakarta_ee_logo_schooner_color_stacked_default.png[pdfwidth=4.25in,align=right]
 endif::[]
 
 // == License
