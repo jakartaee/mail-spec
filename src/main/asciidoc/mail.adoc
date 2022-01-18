@@ -2431,6 +2431,12 @@ cType.setParameter("color", "red");
 String contentType = cType.toString();
 ----
 
+== Provider Requirements
+
+Jakarta Mail provider must implement _jakarta.mail.util.StreamProvider_ interface. Through
+this interface, an implementation of the Jakarta Mail Specification provides different
+encoders and decoders required by the Jakarta Mail APIs.
+
 [appendix]
 [[a823]]
 == Environment Properties
@@ -3755,3 +3761,19 @@ hierarchy.
 
 image:images/mail-28.svg[image]
 
+[appendix]
+== Revision History
+
+This appendix lists the significant changes that have been made during
+the development of the Java Mail Specification.
+
+=== Jakarta Mail 2.1
+
+* Added _jakarta.mail.util.StreamProvider_ interface.
+
+=== Jakarta Mail 2.0
+
+* Created document from Java Mail 1.6 Final Release specification.
+* The document was converted to Asciidoc format.
+* Packages of all API classes were changed to jakarta.persistence.
+These changes are reflected in the specification document.
